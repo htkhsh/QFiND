@@ -14,42 +14,17 @@
 
 This repository contains Python codes for constructing an effective system-bath model. The code allows for the estimation of frequencies and coefficients in the system plus bosonic bath model using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS).
 
-## Code Structure
-
-### Main Files
-
-- **`corrfunc.py`**: 
-  - Defines functions to compute the real (`S_exact`) and imaginary (`A_exact`) parts of the BCF. It numerically integrates the fluctuation-dissipation theorem (FDT) to evaluate these components.
-
-- **`edr.py`**: 
-  - Implements frequency estimation using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS). This allows for decomposing time-domain data to estimate its frequency content.
-
-- **`eval.py`**: 
-  - Contains functions to evaluate the frequency spectrum based on time correlation functions, using the methods implemented in `edr.py`.
-
-- **`global_value.py`**: 
-  - Contains global configuration parameters (e.g., temperature, spectral density type, and max frequency). These are used across the other modules to ensure consistent simulation settings.
-
-- **`main.py`**: 
-  - The main script to run the simulation. It initializes the required parameters, runs frequency estimations, and generates plots of the correlation functions.
-
-- **`my_function.py`**: 
-  - Utility functions for setting up parameters for the simulation.
-
-- **`plot.py`**: 
-  - Defines the plotting logic to visualize the real and imaginary parts of the BCF.
-
-- **`specdens.py`**: 
-  - Contains functions for computing different types of spectral density (power law, Tannor-Meyer, Brownian). These are used in the correlation function calculations.
+$$C(t)=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d} \omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}$$
 
 ## Usage
 
 1. Set the required parameters in `my_function.py` (see below).  
 2. Run the main script:
    ```
-   python main.py
+   python ./src/main.py
    ```
-3. The output will include the estimated frequencies and coefficients (saved as `omega_g.txt`), along with a plot of the resultant bath correlation function (saved as `bcf.png`).
+3. The output will include the estimated frequencies and coefficients (saved as `omega_g.txt`), along with a plot of the resultant BCF (saved as `bcf.png`).
+
 
 ## Parameter Configuration
 
@@ -59,13 +34,16 @@ To customize the simulation, you need to adjust certain parameters in the follow
 
 - **`global_value.py`**: This file contains important global parameters such as:
   - `temperature`: Specifies the temperature of the system in Kelvin.
+  - `tc` (double): Cutoff time in [fs].
+  - `omegac` (double): Cutoff frequency in [cm^{-1}].
+  - `M` (integer): Number of sample points in the time domain.
+  - `N` (integer): Number of sample points in the frequency domain.
+  - `eps` (double): Threshold for numerical calculations.
   - `stype`: The type of spectral density model (`"PWR"`, `"TMn"`, `"BOn"`).
   - `wmax`: The maximum frequency cutoff for the spectral density calculation.
   - Parameters for specific spectral density types, such as:
     - `s`, `alpha`, `gamc` for Power-law Exponential (`PWR`).
     - `Omg`, `Gam`, `Lam` for Tannor-Meyer (`TMn`) and Brownian Oscillator (`BOn`).
-
-- **`my_function.py`**: Use the `setpara()` function to set up parameters needed by the simulation. Customize the default values within this function for your use case.
 
 ### Example Parameter Settings
 
@@ -86,6 +64,7 @@ To customize the simulation, you need to adjust certain parameters in the follow
    gamc = 1.0
    ```
 
+
 ## Functionality
 
 ### Spectral Density Types
@@ -105,12 +84,12 @@ The program uses Interpolative Decomposition (ID) and Non-negative Least Squares
 
 The Bath Correlation Function (BCF) is visualized using `matplotlib`. The plotting function in `plot.py` generates a plot of the BCF and the approximation error and saves it as `bcf.png`.
 
-## Authors
-Hideaki Takahashi (takahashi.hideaki.w33@kyoto-u.jp)
+
 
 ## Cite `EDR-ID`
 If you like `EDR-ID`, we would appreciate it if you starred the repository in order to help us increase its visibility. Furthermore, if you find the framework useful in your research, we would be grateful if you could cite our publications
- [ [Commun. Phys. 6, 313 (2023)](https://doi.org/10.1038/s42005-023-01427-2)  ] 
+- H. Takahashi and R. Borrelli, J. Chem. Phys. 161, 151101 (2024). (https://doi.org/10.1063/5.0232232) 
+- H. Takahashi and R. Borrelli, submitted to J. Chem. Phys.
 using the following bibtex entry:
 ```bib
 @article{HierarchicalEOM-jl2023,
@@ -127,6 +106,12 @@ using the following bibtex entry:
   journal = {Communications Physics}
 }
 ```
+
+
+## Authors
+
+Hideaki Takahashi (takahashi.hideaki.w33@kyoto-u.jp)
+
 
 ## License
 
