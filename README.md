@@ -14,7 +14,7 @@
 
 This repository contains Python codes for constructing an effective system-bath model. The code allows for the estimation of frequencies and coefficients in the system plus bosonic bath model using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS).
 
-$$C(t)=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d} \omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}$$
+$$C(t)=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}$$
 
 ## Usage
 
@@ -87,10 +87,11 @@ The Bath Correlation Function (BCF) is visualized using `matplotlib`. The plotti
 
 
 ## Cite `EDR-ID`
-If you like `EDR-ID`, we would appreciate it if you starred the repository in order to help us increase its visibility. Furthermore, if you find the framework useful in your research, we would be grateful if you could cite our publications
+If you like `EDR-ID`, we would appreciate it if you starred the repository in order to help us increase its visibility. Furthermore, if you find the framework useful in your research, we would be grateful if you could cite our publications:
 - H. Takahashi and R. Borrelli, J. Chem. Phys. 161, 151101 (2024). (https://doi.org/10.1063/5.0232232) 
 - H. Takahashi and R. Borrelli, submitted to J. Chem. Phys.
-using the following bibtex entry:
+
+Here are the bibtex entries:
 ```bib
 @article{HierarchicalEOM-jl2023,
   doi = {10.1038/s42005-023-01427-2},
@@ -115,4 +116,6 @@ Hideaki Takahashi (takahashi.hideaki.w33@kyoto-u.jp)
 
 ## License
 
-This project is licensed under the MIT License.
+[![license](https://img.shields.io/badge/license-New%20BSD-blue.svg)](http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22Revised_BSD_License.22.2C_.22New_BSD_License.22.2C_or_.22Modified_BSD_License.22.29)
+
+This project is distributed under the [BSD 3-clause License](./LICENSE.md).
