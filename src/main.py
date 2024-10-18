@@ -11,7 +11,7 @@ Nsp, wk, zk, krank = edr_id(g.M, g.N, g.tc, g.omegac, g.temperature, g.eps, g.kr
 calc_error(Nsp, wk, zk)
 
 # Write frequencies omega_k and coefficients g_k(\beta) to a file
-filename = "omega_z.txt"
+filename = "../omega_g.txt"
 with open(filename, 'w') as of:
     of.write("================================================================\n")
     of.write("       omega_k[cm^-1]      z_k*sbeta(omega_j)[(cm^-1)^2]        \n")
