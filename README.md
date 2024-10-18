@@ -39,7 +39,11 @@ To customize the simulation, you need to adjust certain parameters in the follow
   - `M` (integer): Number of sample points in the time domain.
   - `N` (integer): Number of sample points in the frequency domain.
   - `eps` (double): Threshold for numerical calculations.
-  - `stype`: The type of spectral density model (`"PWR"`, `"TMn"`, `"BOn"`).
+  - `stype`: The type of spectral density $J(\omega)$ (`"PWR"`, `"TMn"`, `"BOn"`).  The program supports several types of spectral density, such as:
+    - Power-law with exponential cutoff (`PWR`) 
+      $$J(\omega)=\omega\exp(-\omega/\gamma_c)$$
+    - Sum of Tannor-Meyer type spectral densities (`TMn`)
+    - Sum of Brownian oscillator spectral densities (`BOn`)
   - `wmax`: The maximum frequency cutoff for the spectral density calculation.
   - Parameters for specific spectral density types, such as:
     - `s`, `alpha`, `gamc` for Power-law Exponential (`PWR`).
@@ -65,46 +69,24 @@ To customize the simulation, you need to adjust certain parameters in the follow
    ```
 
 
-## Functionality
-
-### Spectral Density Types
-
-The program supports several types of spectral density, such as:
-- Power-law with exponential cutoff (`PWR`)
-- Tannor-Meyer type (`TMn`)
-- Brownian oscillator (`BOn`)
-
-These are specified in `global_value.py`.
-
-### Frequency Estimation
-
-The program uses Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS) for estimating frequencies from the time-domain correlation data. The method is implemented in `edr.py`.
-
-### Plotting
-
-The Bath Correlation Function (BCF) is visualized using `matplotlib`. The plotting function in `plot.py` generates a plot of the BCF and the approximation error and saves it as `bcf.png`.
-
-
-
 ## Cite `EDR-ID`
-If you like `EDR-ID`, we would appreciate it if you starred the repository in order to help us increase its visibility. Furthermore, if you find the framework useful in your research, we would be grateful if you could cite our publications:
+If you find the framework useful in your research, we would be grateful if you could cite our publications:
 - H. Takahashi and R. Borrelli, J. Chem. Phys. 161, 151101 (2024). (https://doi.org/10.1063/5.0232232) 
 - H. Takahashi and R. Borrelli, submitted to J. Chem. Phys.
 
 Here are the bibtex entries:
 ```bib
-@article{HierarchicalEOM-jl2023,
-  doi = {10.1038/s42005-023-01427-2},
-  url = {https://doi.org/10.1038/s42005-023-01427-2},
-  year = {2023},
-  month = {Oct},
-  publisher = {Nature Portfolio},
-  volume = {6},
-  number = {1},
-  pages = {313},
-  author = {Huang, Yi-Te and Kuo, Po-Chen and Lambert, Neill and Cirio, Mauro and Cross, Simon and Yang, Shen-Liang and Nori, Franco and Chen, Yueh-Nan},
-  title = {An efficient {J}ulia framework for hierarchical equations of motion in open quantum systems},
-  journal = {Communications Physics}
+@article{TakahashiBorrelli2024JCP,
+  title = {Effective Modeling of Open Quantum Systems by Low-Rank Discretization of Structured Environments},
+  author = {Takahashi, Hideaki and Borrelli, Raffaele},
+  year = {2024},
+  month = oct,
+  journal = {The Journal of Chemical Physics},
+  volume = {161},
+  number = {15},
+  pages = {151101},
+  issn = {0021-9606},
+  doi = {10.1063/5.0232232}
 }
 ```
 
@@ -115,7 +97,5 @@ Hideaki Takahashi (takahashi.hideaki.w33@kyoto-u.jp)
 
 
 ## License
-
-[![license](https://img.shields.io/badge/license-New%20BSD-blue.svg)](http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22Revised_BSD_License.22.2C_.22New_BSD_License.22.2C_or_.22Modified_BSD_License.22.29)
 
 This project is distributed under the [BSD 3-clause License](./LICENSE.md).
