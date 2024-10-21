@@ -1,19 +1,25 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from my_function import setpara 
-import global_value as g
+import sys
+from init import setpara, const, opt
 from edr import edr_id
 from eval import calc_error
 from specdens import sbeta
 
 # Parameter setting
-setpara()
-
+f = open(str(sys.argv[1]), mode='r')
+setpara(f)
+icm2ifs = const['icm2ifs']
+M = opt['M']
+N = opt['N']
+Tc = opt['Tc']
+Omegac = opt['Omegac']
+eps = opt['eps']
+frank = opt['frank']
 # Main routine
-Nsp, wk, zk, krank = edr_id(g.M, g.N, g.tc, g.omegac, g.temperature, g.eps, g.krank)
+Nsp, wk, zk, krank = edr_id(M, N, Tc, Omegac, eps, frank)
 
-# Error estimation and Plotting
-calc_error(Nsp, wk, zk)
+# Error estimation and Visualization
+calc_error(wk, zk)
 
 # Write frequencies omega_k and coefficients g_k(\beta) to a file
 filename = "omega_g.txt"
@@ -23,5 +29,5 @@ with open(filename, 'w') as of:
     of.write("================================================================\n")
     for i in range(Nsp):
         of.write('{:25.15e} {:25.15e}\n'.format(
-            wk[i] / g.icm2ifs, zk[i] * sbeta(wk[i]) / (g.icm2ifs ** 2.0)
+            wk[i] / icm2ifs, zk[i] * sbeta(wk[i]) / (icm2ifs ** 2.0)
         ))

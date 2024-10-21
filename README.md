@@ -12,7 +12,7 @@
 
 # Effective Discrete Renpresentation of Spectral Density Based on Interpolative Decomposition
 
-This repository contains Python codes for constructing an effective system-bath model. The code allows for the estimation of frequencies and coefficients in the system plus bosonic bath model using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS).
+This repository contains Python codes for constructing an effective system-bath model. The code allows for the estimation of frequencies and coefficients in the system plus bosonic bath model using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS).  See 
 
 $$C(t)=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}$$
 
@@ -33,18 +33,21 @@ $$C(t)=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\m
 To customize the simulation, you need to adjust certain parameters in the following files:
 
 - **`global_value.py`**: This file contains important global parameters such as:
-  - `temperature`: Specifies the temperature of the system in Kelvin.
-  - `tc` (double): Cutoff time in [fs].
-  - `omegac` (double): Cutoff frequency in [cm^{-1}].
+  - `temperature`: Specifies the temperature of the system in [$\mathrm{K}$].
+  - `tc` (double): Cutoff time in [$\mathrm{fs}$].
+  - `omegac` (double): Cutoff frequency in [$\mathrm{cm}^{-1}$].
   - `M` (integer): Number of sample points in the time domain.
   - `N` (integer): Number of sample points in the frequency domain.
-  - `eps` (double): Threshold for numerical calculations.
+  - `wmax`: The maximum frequency cutoff used in the numerical integration of the FDT to calculate the BCF.
+  - `eps` (double): Threshold for the ID.
+  - `frank` (integer): Rank for the ID.  When frank is set to a value larger than -1 ($(\text{frank})>-1$), ID is performed based on the rank.
   - `stype`: The type of spectral density $J(\omega)$ (`"PWR"`, `"TMn"`, `"BOn"`).  The program supports several types of spectral density, such as:
     - Power-law with exponential cutoff (`PWR`) 
-      $$J(\omega)=\omega\exp(-\omega/\gamma_c)$$
+      $$J(\omega)=\pi\alpha\omega_c^{1-s}\omega^s\mathrm{e}^{-\omega/\omega_c}$$
     - Sum of Tannor-Meyer type spectral densities (`TMn`)
-    - Sum of Brownian oscillator spectral densities (`BOn`)
-  - `wmax`: The maximum frequency cutoff for the spectral density calculation.
+      $$J(\omega)=\sum_{j=1}^n \frac{4\Gamma_j\lambda_j(\Omega_j^2+\Gamma_j^2)\omega}{\left[(\omega+\Omega_j)^2+\Gamma_j^2\right]\left[(\omega-\Omega_j)^2+\Gamma_j^2\right]}$$
+    - Sum of Brownian spectral densities (`BOn`)
+      $$J(\omega)=\sum_{j=1}^n 2\lambda_j\frac{\zeta_j \Omega_j^2\omega}{(\omega^2-\Omega_j^2)^2+\zeta_j^2\Omega_j^2}$$
   - Parameters for specific spectral density types, such as:
     - `s`, `alpha`, `gamc` for Power-law Exponential (`PWR`).
     - `Omg`, `Gam`, `Lam` for Tannor-Meyer (`TMn`) and Brownian Oscillator (`BOn`).

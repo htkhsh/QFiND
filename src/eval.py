@@ -1,11 +1,12 @@
 import numpy as np
-import global_value as g
+from init import opt
 from specdens import sbeta
 from corrfunc import S_exact, A_exact
-import matplotlib.pyplot as plt
 from plot import plot_bcf
 
-def calc_error(Nsp, wk, gk):
+M = opt['M']
+Tc = opt['Tc']
+def calc_error(wk, gk):
     """
     Calculate the error between the approximated and exact correlation functions.
 
@@ -17,12 +18,11 @@ def calc_error(Nsp, wk, gk):
     Returns:
     None
     """
-    M = g.M
     # Compute coefficients ck(i) = gk(i) * sbeta(w(i))
     ck = gk * np.array([sbeta(wi) for wi in wk]) 
 
     c0 = S_exact(0.0)
-    t = np.linspace(0, g.tc, M)
+    t = np.linspace(0, Tc, M)
     approx = np.zeros(M, dtype=complex)
     exact = np.zeros(M, dtype=complex)
     error = np.zeros(M, dtype=complex)

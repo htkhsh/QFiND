@@ -1,30 +1,34 @@
 import numpy as np
-from scipy import constants as pc
-import global_value as g
+import sys
+from init import setpara, const, opt
+
+f = open(str(sys.argv[1]), mode='r')
+setpara(f)
+icm2ifs = const['icm2ifs']
+hbar = const['hbar']
+kb = const['kb'] 
+Temp = opt['temperature']
+stype = opt['stype']
+bho = hbar*1e15/kb/Temp
 
 def spectral_density(stype, omega):
     if stype == "PWR":
-        res = powerlaw_exp(omega, g.s, g.alpha, g.gamc)
+        res = powerlaw_exp(omega, opt['s'], opt['alpha'], opt['gamc'])
     elif stype == "TMn":
-        res = tannor_meyer_n(omega, g.Omg, g.Gam, g.Lam)
+        res = tannor_meyer_n(omega, opt['Omg'], opt['Gam'], opt['Lam'])
     elif stype == "BOn":
-        res = brownian(omega, g.Omg, g.Gam, g.Lam)
+        res = brownian(omega, opt['Omg'], opt['Gam'], opt['Lam'])
     else:
         res = 0.0 
     return res
 
 
 def sbeta(omega):
-    hbar = pc.h/2.0/np.pi
-    kb = pc.k 
-    bho = hbar*1e15/kb/g.temperature
-    if g.temperature == 0.0:
-        res = np.sign(omega) * spectral_density(g.stype, np.abs(omega)) / np.pi
+    if Temp == 0.0:
+        res = np.sign(omega) * spectral_density(stype, np.abs(omega)) / np.pi
     else:
-        bho = 1.0
-        res = (np.sign(omega) * spectral_density(g.stype, np.abs(omega)) *
+        res = (np.sign(omega) * spectral_density(stype, np.abs(omega)) *
                (1.0 / np.tanh(0.5 * bho * omega) + 1.0) / (2.0 * np.pi))
-    
     return res
 
 
