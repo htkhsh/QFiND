@@ -30,8 +30,8 @@ def setpara(f):
     # spectral density
     # PWR
     opt['s'] = float(opt['s'])
+    opt['alpha'] = float(opt['alpha'])/float(opt['gamc'])
     opt['gamc'] = float(opt['gamc'])*const['icm2ifs']
-    opt['alpha'] = float(opt['alpha'])
     # TMn
     opt['Omg'] = np.array([float(num.strip()) for num in opt['Omg'].split(',')])*const['icm2ifs']
     opt['Gam'] = np.array([float(num.strip()) for num in opt['Gam'].split(',')])*const['icm2ifs']

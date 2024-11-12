@@ -12,16 +12,23 @@
 
 # Effective Discrete Renpresentation of Spectral Density Based on Interpolative Decomposition
 
-This repository contains Python codes for constructing an effective system-bath model. The code allows for the estimation of frequencies and coefficients in the system plus bosonic bath model using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS).  See 
+This repository contains Python codes for constructing an effective discrete representation of a system-bath model. In other words, this codes provides an approximation of the bath correlation function $C(t) for a given spectral density $J(\omega)$
+$$
+\begin{aligned}
+C(t)&=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}\\
+&\approx \sum_{k=1}^M g_k^2 \mathrm{e}^{-i\omega t},\;\omega_k,g_k\in\mathbb{R}\backslash\{0\}
+\end{aligned}
+$$
+The code allows for the estimation of frequencies and coefficients in the system plus bosonic bath model using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS). 
 
-$$C(t)=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}$$
+
 
 ## Usage
 
-1. Set the required parameters in `my_function.py` (see below).  
+1. Set the required parameters in an input file `input.txt` (see below).  
 2. Run the main script:
    ```
-   python ./src/main.py
+   python ./src/main.py input.txt
    ```
 3. The output will include the estimated frequencies and coefficients (saved as `omega_g.txt`), along with a plot of the resultant BCF (saved as `bcf.png`).
 
@@ -32,10 +39,10 @@ $$C(t)=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\m
 
 To customize the simulation, you need to adjust certain parameters in the following files:
 
-- **`global_value.py`**: This file contains important global parameters such as:
+- **`input.txt`**: This file contains important global parameters such as:
   - `temperature`: Specifies the temperature of the system in [$\mathrm{K}$].
-  - `tc` (double): Cutoff time in [$\mathrm{fs}$].
-  - `omegac` (double): Cutoff frequency in [$\mathrm{cm}^{-1}$].
+  - `Tc` (double): Cutoff time in [$\mathrm{fs}$].
+  - `Omegac` (double): Cutoff frequency in [$\mathrm{cm}^{-1}$].
   - `M` (integer): Number of sample points in the time domain.
   - `N` (integer): Number of sample points in the frequency domain.
   - `wmax`: The maximum frequency cutoff used in the numerical integration of the FDT to calculate the BCF.
@@ -53,23 +60,6 @@ To customize the simulation, you need to adjust certain parameters in the follow
     - `Omg`, `Gam`, `Lam` for Tannor-Meyer (`TMn`) and Brownian Oscillator (`BOn`).
 
 ### Example Parameter Settings
-
-1. **Temperature Setting**: Set the system temperature in `global_value.py`:
-   ```python
-   temperature = 300.0  # Temperature in Kelvin
-   ```
-
-2. **Spectral Density Type**: Choose the spectral density type based on the physical model:
-   ```python
-   stype = "PWR"  # Power-law exponential decay model
-   ```
-
-3. **Spectral Density Parameters**: For the Power-law model, adjust parameters like:
-   ```python
-   s = 1.0
-   alpha = 0.5
-   gamc = 1.0
-   ```
 
 
 ## Cite `EDR-ID`
@@ -102,3 +92,7 @@ Hideaki Takahashi (takahashi.hideaki.w33@kyoto-u.jp)
 ## License
 
 This project is distributed under the [BSD 3-clause License](./LICENSE.md).
+
+## References
+
+

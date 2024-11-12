@@ -4,7 +4,7 @@ from corrfunc import S_exact, A_exact
 from scipy.linalg.interpolative import interp_decomp, reconstruct_skel_matrix, reconstruct_matrix_from_id
 from scipy.optimize import nnls
 
-def edr_id(M, N, tc, omegac, eps, frank):
+def edr_id(M, N, tc, omegac, eps, frank, rand=False):
     """
     Perform frequency estimation using interpolative decomposition (ID) and NNLS.
 
@@ -29,22 +29,24 @@ def edr_id(M, N, tc, omegac, eps, frank):
     # Create core matrix Kf
     f = create_integrand(M,N,t,w)
 
+    #f = np.loadtxt('fmat.txt')
     # Perform Interpolative Decomposition (ID)
     if frank < 0:
-        frank, idx, B, err1 = id_freq_eps(f, eps)
+        frank, idx, B, err1 = id_freq_eps(f, eps, rand)
     else:
-        idx, B, err1 = id_freq_rank(f, frank)
+        idx, B, err1 = id_freq_rank(f, frank, rand)
         # krank remains the same
-
-    print("rank of f: ", frank)
-    print(idx[:frank])
+    
+    print(np.max(f))
+    print(np.min(f))
+    print("Rank of f: ", frank)
     # Compute estimated frequencies wk
     wk = w[idx[:frank]]
 
     # Compute coefficients g using NNLS or another method
     zk, err2 = edr_coef(t, B)
 
-    ind = np.argsort(-wk)
+    ind = np.argsort(wk)
     wk = wk[ind]
     zk = zk[ind]
 
@@ -63,7 +65,7 @@ def edr_id(M, N, tc, omegac, eps, frank):
     return Nsp, wk, zk, frank
 
 
-def id_freq_eps(f, eps):
+def id_freq_eps(f, eps, rnd):
     """
     Perform interpolative decomposition on matrix K with error tolerance eps.
 
@@ -87,7 +89,7 @@ def id_freq_eps(f, eps):
     f0 = f.copy()
 
     # Perform the interpolative decomposition
-    frank, idx, proj = interp_decomp(f0, eps)
+    frank, idx, proj = interp_decomp(f0, eps, rand=rnd)
 
     # Extract the selected columns to form matrix B
     B = reconstruct_skel_matrix(f0, frank, idx)
@@ -101,7 +103,7 @@ def id_freq_eps(f, eps):
     return frank, idx, B, err
 
 
-def id_freq_rank(f, frank):
+def id_freq_rank(f, frank, rnd):
     """
     Perform interpolative decomposition on matrix K with specified rank krank.
 
@@ -119,11 +121,11 @@ def id_freq_rank(f, frank):
     - err: float
         Maximum absolute error between the original and approximated matrix.
     """
-    
+
     f0 = f.copy()
 
     # Perform the interpolative decomposition with specified rank
-    idx, proj = interp_decomp(f0, frank)
+    idx, proj = interp_decomp(f0, frank, rand=rnd)
 
     # Extract the selected columns to form matrix B
     B = reconstruct_skel_matrix(f0, frank, idx)
