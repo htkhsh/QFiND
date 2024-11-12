@@ -15,8 +15,10 @@ Tc = opt['Tc']
 Omegac = opt['Omegac']
 eps = opt['eps']
 frank = opt['frank']
+rand = opt['rand']
 # Main routine
-Nsp, wk, zk, krank = edr_id(M, N, Tc, Omegac, eps, frank)
+if opt['method'] == 'ID':
+    Nsp, wk, zk, krank = edr_id(M, N, Tc, Omegac*icm2ifs, eps, frank, rand)
 
 # Error estimation and Visualization
 calc_error(wk, zk)

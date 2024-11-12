@@ -1,9 +1,11 @@
 import numpy as np
+from init import const
 from specdens import sbeta
 from corrfunc import S_exact, A_exact
 from scipy.linalg.interpolative import interp_decomp, reconstruct_skel_matrix, reconstruct_matrix_from_id
 from scipy.optimize import nnls
 
+icm2ifs = const['icm2ifs']
 def edr_id(M, N, tc, omegac, eps, frank, rand=False):
     """
     Perform frequency estimation using interpolative decomposition (ID) and NNLS.
@@ -29,16 +31,13 @@ def edr_id(M, N, tc, omegac, eps, frank, rand=False):
     # Create core matrix Kf
     f = create_integrand(M,N,t,w)
 
-    #f = np.loadtxt('fmat.txt')
     # Perform Interpolative Decomposition (ID)
-    if frank < 0:
+    if frank < 1:
         frank, idx, B, err1 = id_freq_eps(f, eps, rand)
     else:
         idx, B, err1 = id_freq_rank(f, frank, rand)
         # krank remains the same
     
-    print(np.max(f))
-    print(np.min(f))
     print("Rank of f: ", frank)
     # Compute estimated frequencies wk
     wk = w[idx[:frank]]
@@ -187,12 +186,12 @@ def create_integrand(M, N, t, w):
     # Fill the first M rows of K with the real part of an integrand
     for j in range(N):
         for i in range(M):
-            f[i, j] = sbeta(w[j]) * np.cos(w[j] * t[i])
+            f[i, j] = sbeta(w[j],icm2ifs) * np.cos(w[j] * t[i])
     
     # Fill the next M rows of K with the imaginary part of an integrand
     for i in range(M, 2*M):
         for j in range(N):
-            f[i, j] = -sbeta(w[j]) * np.sin(w[j] * t[i-M])
+            f[i, j] = -sbeta(w[j],icm2ifs) * np.sin(w[j] * t[i-M])
     
     return f
 

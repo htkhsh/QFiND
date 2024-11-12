@@ -21,18 +21,20 @@ def setpara(f):
     # Parse standard options
     opt['temperature'] = float(opt['temperature'])
     opt['Tc'] = float(opt['Tc'])
-    opt['Omegac'] = float(opt['Omegac'])*const['icm2ifs']
-    opt['Omega_max'] = float(opt['Omega_max'])*const['icm2ifs']
+    opt['Omegac'] = float(opt['Omegac'])
+    opt['Omega_max'] = float(opt['Omega_max'])
     opt['M'] = int(opt['M'])
     opt['N'] = int(opt['N'])
     opt['eps'] = float(opt['eps'])
     opt['frank'] = int(opt['frank'])
+    opt['rand'] = bool(int(opt['rand']))
     # spectral density
-    # PWR
-    opt['s'] = float(opt['s'])
-    opt['alpha'] = float(opt['alpha'])/float(opt['gamc'])
-    opt['gamc'] = float(opt['gamc'])*const['icm2ifs']
+    if opt['stype'] == "PWR":
+        opt['s'] = float(opt['s'])
+        opt['alpha'] = float(opt['alpha'])/float(opt['gamc'])
+        opt['gamc'] = float(opt['gamc'])
     # TMn
-    opt['Omg'] = np.array([float(num.strip()) for num in opt['Omg'].split(',')])*const['icm2ifs']
-    opt['Gam'] = np.array([float(num.strip()) for num in opt['Gam'].split(',')])*const['icm2ifs']
-    opt['Lam'] = np.array([float(num.strip()) for num in opt['Lam'].split(',')])*const['icm2ifs']
+    if opt['stype'] == "TMn" or opt['stype'] == "BOn":
+        opt['Omg'] = np.array([float(num.strip()) for num in opt['Omg'].split(',')])*const['icm2ifs']
+        opt['Gam'] = np.array([float(num.strip()) for num in opt['Gam'].split(',')])*const['icm2ifs']
+        opt['Lam'] = np.array([float(num.strip()) for num in opt['Lam'].split(',')])*const['icm2ifs']

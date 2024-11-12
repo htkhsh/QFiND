@@ -1,12 +1,13 @@
 import numpy as np
-from init import opt
+from init import opt, const
 from specdens import sbeta
 from corrfunc import S_exact, A_exact
 from plot import plot_bcf
 
 M = opt['M']
 Tc = opt['Tc']
-def calc_error(wk, gk):
+icm2ifs = const['icm2ifs']
+def calc_error(wk, zk):
     """
     Calculate the error between the approximated and exact correlation functions.
 
@@ -19,7 +20,7 @@ def calc_error(wk, gk):
     None
     """
     # Compute coefficients ck(i) = gk(i) * sbeta(w(i))
-    ck = gk * np.array([sbeta(wi) for wi in wk]) 
+    gk = zk * np.array([sbeta(wi,icm2ifs) for wi in wk]) 
 
     c0 = S_exact(0.0)
     t = np.linspace(0, Tc, M)
@@ -29,7 +30,7 @@ def calc_error(wk, gk):
     for i in range(M):
         ti = t[i]
         # Compute approximations
-        approx[i] = approximation(ti, ck, wk)
+        approx[i] = approximation(ti, gk, wk)
         # Compute exact values
         exact[i] = S_exact(ti) + 1j * A_exact(ti)
         # Compute error

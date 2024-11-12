@@ -11,23 +11,23 @@ Temp = opt['temperature']
 stype = opt['stype']
 bho = hbar*1e15/kb/Temp
 
-def spectral_density(stype, omega):
+def spectral_density(stype, omega, nrm=1.0):
     if stype == "PWR":
-        res = powerlaw_exp(omega, opt['s'], opt['alpha'], opt['gamc'])
+        res = powerlaw_exp(omega, opt['s'], opt['alpha'], opt['gamc']*nrm)
     elif stype == "TMn":
-        res = tannor_meyer_n(omega, opt['Omg'], opt['Gam'], opt['Lam'])
+        res = tannor_meyer_n(omega, opt['Omg']*nrm, opt['Gam']*nrm, opt['Lam']*nrm)
     elif stype == "BOn":
-        res = brownian(omega, opt['Omg'], opt['Gam'], opt['Lam'])
+        res = brownian(omega, opt['Omg']*nrm, opt['Gam']*nrm, opt['Lam']*nrm)
     else:
         res = 0.0 
     return res
 
 
-def sbeta(omega):
+def sbeta(omega, nrm=1.0):
     if Temp == 0.0:
-        res = np.sign(omega) * spectral_density(stype, np.abs(omega)) / np.pi
+        res = np.sign(omega) * spectral_density(stype, np.abs(omega), nrm) / np.pi
     else:
-        res = (np.sign(omega) * spectral_density(stype, np.abs(omega)) *
+        res = (np.sign(omega) * spectral_density(stype, np.abs(omega), nrm) *
                (1.0 / np.tanh(0.5 * bho * omega) + 1.0) / (2.0 * np.pi))
     return res
 
