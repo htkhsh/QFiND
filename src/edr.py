@@ -6,7 +6,7 @@ from scipy.linalg.interpolative import interp_decomp, reconstruct_skel_matrix, r
 from scipy.optimize import nnls
 
 icm2ifs = const['icm2ifs']
-def edr_id(M, N, tc, omegac, eps, frank, rand=False):
+def edr_id(Nt, Nw, tc, omegac, eps, frank, rand=False):
     """
     Perform frequency estimation using interpolative decomposition (ID) and NNLS.
 
@@ -26,10 +26,10 @@ def edr_id(M, N, tc, omegac, eps, frank, rand=False):
     - krank (int): Updated rank after ID.
     """
     # Generate time mesh tf and frequency mesh wf
-    t, w = equispaced_mesh(M,N,tc,omegac)
+    t, w = equispaced_mesh(Nt,Nw,tc,omegac)
 
     # Create core matrix Kf
-    f = create_integrand(M,N,t,w)
+    f = create_integrand(Nt,Nw,t,w)
 
     # Perform Interpolative Decomposition (ID)
     if frank < 1:
@@ -151,16 +151,16 @@ def edr_coef(t, B):
     - g (ndarray): Estimated coefficients (size: krank)
     - err (float): Estimation error
     """
-    M = len(t)
-    c = np.zeros(2*M)
+    N = len(t)
+    c = np.zeros(2*N)
 
     # Construct vector c with S_exact(t) and A_exact(t)
-    for i in range(M):
+    for i in range(N):
         ti = t[i]
         c[i] = S_exact(ti)
-    for i in range(M):
+    for i in range(N):
         ti = t[i]
-        c[M + i] = A_exact(ti)
+        c[N + i] = A_exact(ti)
 
     # Solve the NNLS problem: minimize ||B * g - c|| subject to g >= 0
     g, err = nnls(B, c)
@@ -168,30 +168,30 @@ def edr_coef(t, B):
     return g, err
 
 
-def equispaced_mesh(M, N, tc, omegac):
+def equispaced_mesh(Nt, Nw, tc, omegac):
 
     # Time grid (t)
-    t = np.linspace(0,tc,M)
+    t = np.linspace(0,tc,Nt)
 
     # Frequency grid (w)
-    w = np.linspace(-omegac,omegac,N)
+    w = np.linspace(-omegac,omegac,Nw)
 
     return t, w
 
 
-def create_integrand(M, N, t, w):
+def create_integrand(Nt, Nw, t, w):
     
-    f = np.zeros((2*M,N),dtype=float)
+    f = np.zeros((2*Nt,Nw),dtype=float)
 
     # Fill the first M rows of K with the real part of an integrand
-    for j in range(N):
-        for i in range(M):
+    for i in range(Nt):
+        for j in range(Nw):
             f[i, j] = sbeta(w[j],icm2ifs) * np.cos(w[j] * t[i])
     
     # Fill the next M rows of K with the imaginary part of an integrand
-    for i in range(M, 2*M):
-        for j in range(N):
-            f[i, j] = -sbeta(w[j],icm2ifs) * np.sin(w[j] * t[i-M])
+    for i in range(Nt, 2*Nt):
+        for j in range(Nw):
+            f[i, j] = -sbeta(w[j],icm2ifs) * np.sin(w[j] * t[i-Nt])
     
     return f
 

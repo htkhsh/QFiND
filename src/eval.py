@@ -4,10 +4,10 @@ from specdens import sbeta
 from corrfunc import S_exact, A_exact
 from plot import plot_bcf
 
-M = opt['M']
+Nt = opt['Nt']
 Tc = opt['Tc']
 icm2ifs = const['icm2ifs']
-def calc_error(wk, zk):
+def calc_error(wk, gk):
     """
     Calculate the error between the approximated and exact correlation functions.
 
@@ -19,15 +19,13 @@ def calc_error(wk, zk):
     Returns:
     None
     """
-    # Compute coefficients ck(i) = gk(i) * sbeta(w(i))
-    gk = zk * np.array([sbeta(wi,icm2ifs) for wi in wk]) 
-
+    
     c0 = S_exact(0.0)
-    t = np.linspace(0, Tc, M)
-    approx = np.zeros(M, dtype=complex)
-    exact = np.zeros(M, dtype=complex)
-    error = np.zeros(M, dtype=complex)
-    for i in range(M):
+    t = np.linspace(0, Tc, Nt)
+    approx = np.zeros(Nt, dtype=complex)
+    exact = np.zeros(Nt, dtype=complex)
+    error = np.zeros(Nt, dtype=complex)
+    for i in range(Nt):
         ti = t[i]
         # Compute approximations
         approx[i] = approximation(ti, gk, wk)
@@ -38,7 +36,7 @@ def calc_error(wk, zk):
 
     # Print normalized errors
     normalized_max_error = np.max(np.abs(error)) / c0
-    normalized_avg_error = np.sum(np.abs(error)) / (c0 * M)
+    normalized_avg_error = np.sum(np.abs(error)) / (c0 * Nt)
     print("Normalized maximum error:", normalized_max_error)
     print("Normalized average error:", normalized_avg_error)
 

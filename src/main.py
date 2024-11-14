@@ -9,8 +9,8 @@ from specdens import sbeta
 f = open(str(sys.argv[1]), mode='r')
 setpara(f)
 icm2ifs = const['icm2ifs']
-M = opt['M']
-N = opt['N']
+Nt = opt['Nt']
+Nw = opt['Nw']
 Tc = opt['Tc']
 Omegac = opt['Omegac']
 eps = opt['eps']
@@ -18,18 +18,19 @@ frank = opt['frank']
 rand = opt['rand']
 # Main routine
 if opt['method'] == 'ID':
-    Nsp, wk, zk, krank = edr_id(M, N, Tc, Omegac*icm2ifs, eps, frank, rand)
+    Nsp, wk, zk, krank = edr_id(Nt, Nw, Tc, Omegac*icm2ifs, eps, frank, rand)
+    gk = zk * sbeta(wk,icm2ifs)
 
 # Error estimation and Visualization
-calc_error(wk, zk)
+calc_error(wk, gk)
 
 # Write frequencies omega_k and coefficients g_k(\beta) to a file
 filename = "omega_g.txt"
 with open(filename, 'w') as of:
     of.write("================================================================\n")
-    of.write("       omega_k[cm^-1]      z_k*sbeta(omega_j)[(cm^-1)^2]        \n")
+    of.write("         omega_k [cm^-1]          g_k(\beta) [cm^-1]            \n")
     of.write("================================================================\n")
     for i in range(Nsp):
         of.write('{:25.15e} {:25.15e}\n'.format(
-            wk[i] / icm2ifs, zk[i] * sbeta(wk[i]) / (icm2ifs ** 2.0)
+            wk[i] / icm2ifs, np.sqrt(gk[i]) / icm2ifs
         ))

@@ -18,7 +18,7 @@ def bsdo():
     if Temp < 1e-10:
         w = np.linspace(1e-15, Omegac, M) 
     else:
-        w = np.linspace(-600.0, Omegac, M) 
+        w = np.linspace(-Omegac, Omegac, M) 
     j = sbeta(w)
     j[j < 0] = 0.0  # Set negative values to zero
 
