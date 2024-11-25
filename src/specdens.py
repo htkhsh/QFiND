@@ -28,7 +28,7 @@ def sbeta(omega, nrm=1.0):
         res = np.sign(omega) * spectral_density(stype, np.abs(omega), nrm) / np.pi
     else:
         res = (np.sign(omega) * spectral_density(stype, np.abs(omega), nrm) *
-               (1.0 / np.tanh(0.5 * bho * omega) + 1.0) / (2.0 * np.pi))
+               (1.0 / np.tanh(0.5 * bho*icm2ifs/nrm * omega) + 1.0) / (2.0 * np.pi))
     return res
 
 

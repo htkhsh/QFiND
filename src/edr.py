@@ -6,7 +6,7 @@ from scipy.linalg.interpolative import interp_decomp, reconstruct_skel_matrix, r
 from scipy.optimize import nnls
 
 icm2ifs = const['icm2ifs']
-def edr_id(Nt, Nw, tc, omegac, eps, frank, rand=False):
+def edr_id(N_t, N_w, tc, omegac, eps, frank, rand=False):
     """
     Perform frequency estimation using interpolative decomposition (ID) and NNLS.
 
@@ -26,10 +26,10 @@ def edr_id(Nt, Nw, tc, omegac, eps, frank, rand=False):
     - krank (int): Updated rank after ID.
     """
     # Generate time mesh tf and frequency mesh wf
-    t, w = equispaced_mesh(Nt,Nw,tc,omegac)
+    t, w = equispaced_mesh(N_t,N_w,tc,omegac)
 
     # Create core matrix Kf
-    f = create_integrand(Nt,Nw,t,w)
+    f = create_integrand(N_t,N_w,t,w)
 
     # Perform Interpolative Decomposition (ID)
     if frank < 1:
@@ -168,30 +168,30 @@ def edr_coef(t, B):
     return g, err
 
 
-def equispaced_mesh(Nt, Nw, tc, omegac):
+def equispaced_mesh(N_t, N_w, tc, omegac):
 
     # Time grid (t)
-    t = np.linspace(0,tc,Nt)
+    t = np.linspace(0,tc,N_t)
 
     # Frequency grid (w)
-    w = np.linspace(-omegac,omegac,Nw)
+    w = np.linspace(-omegac,omegac,N_w)
 
     return t, w
 
 
-def create_integrand(Nt, Nw, t, w):
+def create_integrand(N_t, N_w, t, w):
     
-    f = np.zeros((2*Nt,Nw),dtype=float)
+    f = np.zeros((2*N_t,N_w),dtype=float)
 
     # Fill the first M rows of K with the real part of an integrand
-    for i in range(Nt):
-        for j in range(Nw):
+    for i in range(N_t):
+        for j in range(N_w):
             f[i, j] = sbeta(w[j],icm2ifs) * np.cos(w[j] * t[i])
     
     # Fill the next M rows of K with the imaginary part of an integrand
-    for i in range(Nt, 2*Nt):
-        for j in range(Nw):
-            f[i, j] = -sbeta(w[j],icm2ifs) * np.sin(w[j] * t[i-Nt])
+    for i in range(N_t, 2*N_t):
+        for j in range(N_w):
+            f[i, j] = -sbeta(w[j],icm2ifs) * np.sin(w[j] * t[i-N_t])
     
     return f
 

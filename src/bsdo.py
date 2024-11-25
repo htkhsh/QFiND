@@ -8,24 +8,25 @@ from lanczos import lanczos
 f = open(str(sys.argv[1]), mode='r')
 setpara(f)
 icm2ifs = const['icm2ifs']
-M = opt['M']
-N = opt['N']
+N_t = opt['N_t']
+N_w = opt['N_w']
 Tc = opt['Tc']
 Temp = opt['temperature']
 Omegac = opt['Omegac']
+Nbsdo = opt['Nbsdo']
 
 def bsdo():
     if Temp < 1e-10:
-        w = np.linspace(1e-15, Omegac, M) 
+        w = np.linspace(1e-15, Omegac, N_w) 
     else:
-        w = np.linspace(-Omegac, Omegac, M) 
+        w = np.linspace(-Omegac, Omegac, N_w) 
     j = sbeta(w)
     j[j < 0] = 0.0  # Set negative values to zero
 
     wj = np.column_stack((w, j))
 
     # Compute discretized frequencies (wd) and weights (zd)
-    wk, zk = orthpoly_discretization(N, wj)
+    wk, zk = orthpoly_discretization(Nbsdo, wj)
     if Temp < 1e-10:
         norm = quad(lambda w: sbeta(w), 0, Omegac)[0]
     else:

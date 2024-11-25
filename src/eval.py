@@ -4,10 +4,10 @@ from specdens import sbeta
 from corrfunc import S_exact, A_exact
 from plot import plot_bcf
 
-Nt = opt['Nt']
+N_t = opt['N_t']
 Tc = opt['Tc']
 icm2ifs = const['icm2ifs']
-def calc_error(wk, gk):
+def calc_error(wk, zk):
     """
     Calculate the error between the approximated and exact correlation functions.
 
@@ -21,11 +21,11 @@ def calc_error(wk, gk):
     """
     
     c0 = S_exact(0.0)
-    t = np.linspace(0, Tc, Nt)
-    approx = np.zeros(Nt, dtype=complex)
-    exact = np.zeros(Nt, dtype=complex)
-    error = np.zeros(Nt, dtype=complex)
-    for i in range(Nt):
+    t = np.linspace(0, Tc, N_t)
+    approx = np.zeros(N_t, dtype=complex)
+    exact = np.zeros(N_t, dtype=complex)
+    error = np.zeros(N_t, dtype=complex)
+    for i in range(N_t):
         ti = t[i]
         # Compute approximations
         approx[i] = approximation(ti, gk, wk)
@@ -36,12 +36,12 @@ def calc_error(wk, gk):
 
     # Print normalized errors
     normalized_max_error = np.max(np.abs(error)) / c0
-    normalized_avg_error = np.sum(np.abs(error)) / (c0 * Nt)
+    normalized_avg_error = np.sum(np.abs(error)) / (c0 * N_t)
     print("Normalized maximum error:", normalized_max_error)
     print("Normalized average error:", normalized_avg_error)
 
     # Plot a BCF
-    plot_bcf(t, exact/c0, approx/c0, error/c0)
+    plot_bcf(t, exact, approx, error/c0)
 
 
 def approximation(t, rho, alpha):

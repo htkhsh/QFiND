@@ -21,13 +21,18 @@ def setpara(f):
     # Parse standard options
     opt['temperature'] = float(opt['temperature'])
     opt['Tc'] = float(opt['Tc'])
+    opt['N_t'] = int(opt['N_t'])
     opt['Omegac'] = float(opt['Omegac'])
     opt['Omega_max'] = float(opt['Omega_max'])
-    opt['Nt'] = int(opt['Nt'])
-    opt['Nw'] = int(opt['Nw'])
-    opt['eps'] = float(opt['eps'])
-    opt['frank'] = int(opt['frank'])
-    opt['rand'] = bool(int(opt['rand']))
+    if opt['method'] == "ID":
+        opt['N_w'] = int(opt['N_w'])
+        opt['eps'] = float(opt['eps'])
+        opt['frank'] = int(opt['frank'])
+        opt['rand'] = bool(int(opt['rand']))
+    if opt['method'] == "BSDO":
+        opt['Nbsdo'] = int(opt['Nbsdo'])
+        opt['Omegac'] = float(opt['Omegac'])
+        opt['N_w'] = int(opt['N_w'])
     # spectral density
     if opt['stype'] == "PWR":
         opt['s'] = float(opt['s'])
