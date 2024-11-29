@@ -14,9 +14,9 @@ bho = hbar*1e15/kb/Temp
 def spectral_density(stype, omega, nrm=1.0):
     if stype == "PWR":
         res = powerlaw_exp(omega, opt['s'], opt['alpha'], opt['gamc']*nrm)
-    elif stype == "TMn":
-        res = tannor_meyer_n(omega, opt['Omg']*nrm, opt['Gam']*nrm, opt['Lam']*nrm)
-    elif stype == "BOn":
+    elif stype == "TM":
+        res = tannor_meyer(omega, opt['Omg']*nrm, opt['Gam']*nrm, opt['Lam']*nrm)
+    elif stype == "BO":
         res = brownian(omega, opt['Omg']*nrm, opt['Gam']*nrm, opt['Lam']*nrm)
     else:
         res = 0.0 
@@ -37,7 +37,7 @@ def powerlaw_exp(omega, s, alpha, gamc):
     return res
 
 
-def tannor_meyer_n(omega, Omg, Gam, Lam):
+def tannor_meyer(omega, Omg, Gam, Lam):
     n = len(Omg)
     res = 0.0
     for i in range(n):
@@ -55,6 +55,7 @@ def brownian(omega, Omg, Gam, Lam):
         deno = (omega**2 - Omg[i]**2)**2 + Gam[i]**2 * omega**2
         res += p * omega / deno
     return res
+
 
 
 

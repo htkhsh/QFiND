@@ -11,13 +11,12 @@ def edr_id(N_t, N_w, tc, omegac, eps, frank, rand=False):
     Perform frequency estimation using interpolative decomposition (ID) and NNLS.
 
     Parameters:
-    - M (int): Number of time points.
-    - N (int): Number of frequency points.
+    - N_t (int): Number of time points.
+    - N_w (int): Number of frequency points.
     - tc (float): Maximum time value.
     - omegac (float): Maximum frequency value.
-    - temp (float): Temperature parameter.
     - eps (float): Error tolerance for ID.
-    - krank (int): Rank for the ID. If negative, ID uses error tolerance.
+    - krank (int): Rank for the ID. If smaller than 1, ID uses error tolerance.
 
     Returns:
     - Nsp (int): Number of estimated frequencies.
@@ -69,20 +68,15 @@ def id_freq_eps(f, eps, rnd):
     Perform interpolative decomposition on matrix K with error tolerance eps.
 
     Parameters:
-    - K: ndarray
-        Input matrix of shape (M2, N).
-    - eps: float
-        Error tolerance for the decomposition.
+    - f (ndarray): Input matrix of shape (M2, N).
+    - eps (float): Error tolerance for the decomposition.
+    - rnd (bool): Randomized or deterministic ID.
 
     Returns:
-    - krank: int
-        Rank of the approximation.
-    - idx: ndarray
-        Indices of the selected columns.
-    - B: ndarray
-        Matrix containing selected columns of K.
-    - err: float
-        Maximum absolute error between the original and approximated matrix.
+    - frank (int): Rank of the approximation.
+    - idx (ndarray): Indices of the selected columns.
+    - B (ndarray): Matrix containing selected columns of f.   
+    - err (float): Maximum absolute error between the original and approximated matrix.
     """
 
     f0 = f.copy()
@@ -107,18 +101,14 @@ def id_freq_rank(f, frank, rnd):
     Perform interpolative decomposition on matrix K with specified rank krank.
 
     Parameters:
-    - K: ndarray
-        Input matrix of shape (M2, N).
-    - krank: int
-        Desired rank for the approximation.
+    - f (ndarray): Input matrix of shape (M2, N).  
+    - frank (int) : Desired rank for the approximation.
+    - rnd (bool): Randomized or deterministic ID.
 
     Returns:
-    - idx: ndarray
-        Indices of the selected columns.
-    - B: ndarray
-        Matrix containing selected columns of K.
-    - err: float
-        Maximum absolute error between the original and approximated matrix.
+    - idx (ndarray): Indices of the selected columns.
+    - B (ndarray): Matrix containing selected columns of f.   
+    - err (float): Maximum absolute error between the original and approximated matrix.
     """
 
     f0 = f.copy()
@@ -145,10 +135,10 @@ def edr_coef(t, B):
     Parameters:
     - tf (ndarray): Time array (size: M)
     - krank (int): Approximation rank
-    - B (ndarray): Input matrix (size: (2*M, krank))
+    - B (ndarray): Input matrix (size: (2*M, frank))
 
     Returns:
-    - g (ndarray): Estimated coefficients (size: krank)
+    - g (ndarray): Estimated coefficients (size: frank)
     - err (float): Estimation error
     """
     N = len(t)
@@ -169,7 +159,19 @@ def edr_coef(t, B):
 
 
 def equispaced_mesh(N_t, N_w, tc, omegac):
+    """
+    Generate equispaced time and frequency grids.
 
+    Parameters:
+    - N_t (int): Number of time points.
+    - N_w (int): Number of frequency points.
+    - tc (float): Maximum time value.
+    - omegac (float): Maximum frequency value.
+
+    Returns:
+    - t (ndarray): Time grid.
+    - w (ndarray): Frequency grid.
+    """
     # Time grid (t)
     t = np.linspace(0,tc,N_t)
 
@@ -180,7 +182,18 @@ def equispaced_mesh(N_t, N_w, tc, omegac):
 
 
 def create_integrand(N_t, N_w, t, w):
-    
+    """
+    Create the matrix K for the interpolative decomposition.
+
+    Parameters:
+    - N_t (int): Number of time points.
+    - N_w (int): Number of frequency points.
+    - t (ndarray): Time grid.
+    - w (ndarray): Frequency grid.
+
+    Returns:
+    - f (ndarray): Matrix K with shape (2*N_t, N_w).
+    """
     f = np.zeros((2*N_t,N_w),dtype=float)
 
     # Fill the first M rows of K with the real part of an integrand

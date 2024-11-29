@@ -20,7 +20,6 @@ def calc_error(wk, zk):
     None
     """
     
-    c0 = S_exact(0.0)
     t = np.linspace(0, Tc, N_t)
     approx = np.zeros(N_t, dtype=complex)
     exact = np.zeros(N_t, dtype=complex)
@@ -28,38 +27,38 @@ def calc_error(wk, zk):
     for i in range(N_t):
         ti = t[i]
         # Compute approximations
-        approx[i] = approximation(ti, gk, wk)
+        approx[i] = C_t(ti, zk, wk)
         # Compute exact values
         exact[i] = S_exact(ti) + 1j * A_exact(ti)
         # Compute error
         error[i] = (approx[i] - exact[i])
 
     # Print normalized errors
-    normalized_max_error = np.max(np.abs(error)) / c0
-    normalized_avg_error = np.sum(np.abs(error)) / (c0 * N_t)
+    norm = S_exact(0.0)
+    normalized_max_error = np.max(np.abs(error)) / norm
+    normalized_avg_error = np.sum(np.abs(error)) / (norm * N_t)
     print("Normalized maximum error:", normalized_max_error)
     print("Normalized average error:", normalized_avg_error)
 
     # Plot a BCF
-    plot_bcf(t, exact, approx, error/c0)
+    plot_bcf(t, exact, approx, error/norm)
 
 
-def approximation(t, rho, alpha):
+def C_t(t, zk, wk):
     """
     Compute the approximation of the correlation function.
 
     Parameters:
     - t (float): Time value.
-    - Min (int): Maximum index (inclusive).
-    - rho (ndarray): Array of coefficients (complex).
-    - alpha (ndarray): Array of frequencies (complex).
+    - gk (ndarray): Array of coefficients (complex).
+    - wk (ndarray): Array of frequencies (complex).
 
     Returns:
     - res (complex): Result of the approximation at time t.
     """
 
-    N = len(alpha)
+    N = len(wk)
     res = 0.0 + 0.0j
     for m in range(N): 
-        res += rho[m] * np.exp(-1j * alpha[m] * t)
+        res += zk[m] * sbeta(wk[m], icm2ifs) * np.exp(-1j * wk[m] * t)
     return res

@@ -21,23 +21,23 @@ if opt['method'] == 'ID':
     frank = opt['frank']
     rand = opt['rand']
     Nsp, wk, zk, krank = edr_id(N_t, N_w, Tc, Omegac*icm2ifs, eps, frank, rand)
-    gk = zk * sbeta(wk,icm2ifs)
 if opt['method'] == 'BSDO':
-    wk, gk = bsdo()
+    wk, zk = bsdo()
     Nsp = len(wk)
     wk = wk * icm2ifs
-    gk = gk * icm2ifs**2.0
+    zk = zk * icm2ifs**2.0
+    zk = zk / sbeta(wk, icm2ifs)
 
 # Error estimation and Visualization
-calc_error(wk, gk)
+calc_error(wk, zk)
 
 # Write frequencies omega_k and coefficients g_k(beta) to a file
 filename = "omega_g.txt"
 with open(filename, 'w') as of:
     of.write("================================================================\n")
-    of.write("         omega_k [cm^-1]          g_k(beta) [cm^-1]             \n")
+    of.write("         omega_k [cm^-1]          z_k [cm^-1]                   \n")
     of.write("================================================================\n")
     for i in range(Nsp):
         of.write('{:25.15e} {:25.15e}\n'.format(
-            wk[i] / icm2ifs, np.sqrt(gk[i]) / icm2ifs
+            wk[i] / icm2ifs, zk[i] / icm2ifs
         ))

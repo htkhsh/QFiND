@@ -15,13 +15,24 @@ Temp = opt['temperature']
 Omegac = opt['Omegac']
 Nbsdo = opt['Nbsdo']
 
-def bsdo():
+def bsdo(N_w, Omegac):
+    """
+    Compute the discretization of the spectral density using the BSDO method.
+
+    Parameters:
+    - N_w (int) : The number of discretization points.
+    - Omegac (float): The cutoff frequency.
+        
+    Returns:
+    - k (ndarray) : The discretized frequencies.
+    - zk (ndarray) : The squared first components of the eigenvectors (weights).
+    """
     if Temp < 1e-10:
         w = np.linspace(1e-15, Omegac, N_w) 
     else:
         w = np.linspace(-Omegac, Omegac, N_w) 
     j = sbeta(w)
-    j[j < 0] = 0.0  # Set negative values to zero
+    j[j < 0] = 0.0 
 
     wj = np.column_stack((w, j))
 
@@ -31,7 +42,7 @@ def bsdo():
         norm = quad(lambda w: sbeta(w), 0, Omegac)[0]
     else:
         norm = quad(lambda w: sbeta(w), -Omegac, 0)[0] + quad(lambda w: sbeta(w), 0, Omegac)[0]
-    zk = zk*norm
+    zk = zk * norm
 
     return wk, zk
 
@@ -41,18 +52,15 @@ def orthpoly_discretization(N, wj):
     Compute the discretization of orthogonal polynomials.
 
     Parameters:
-    N  : int
-        The number of discretization points.
-    wj : ndarray of shape (n, 2)
+    - N (int) : The number of discretization points.
+    - wj (ndarray):
         An n x 2 array where:
-        - wj[:,0] is the set of support points of the spectral density (the frequencies).
-        - wj[:,1] is the spectral density.
+        - wj[:,0] is the set of support points of the (quantum noise) spectral density (the frequencies).
+        - wj[:,1] is the (quantum noise) spectral density.
 
     Returns:
-    wd : ndarray
-        The eigenvalues (frequencies).
-    zd : ndarray
-        The squared first components of the eigenvectors (weights).
+    -wd (ndarray) : The eigenvalues (frequencies).
+    -zd (ndarray) : The squared first components of the eigenvectors (weights).
     """
     # Ensure wj is a NumPy array
     wj = np.asarray(wj)

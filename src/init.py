@@ -29,7 +29,7 @@ def setpara(f):
         opt['eps'] = float(opt['eps'])
         opt['frank'] = int(opt['frank'])
         opt['rand'] = bool(int(opt['rand']))
-    if opt['method'] == "BSDO":
+    elif opt['method'] == "BSDO":
         opt['Nbsdo'] = int(opt['Nbsdo'])
         opt['Omegac'] = float(opt['Omegac'])
         opt['N_w'] = int(opt['N_w'])
@@ -39,7 +39,7 @@ def setpara(f):
         opt['alpha'] = float(opt['alpha'])/float(opt['gamc'])
         opt['gamc'] = float(opt['gamc'])
     # TMn
-    if opt['stype'] == "TMn" or opt['stype'] == "BOn":
+    elif opt['stype'] == "TMn" or opt['stype'] == "BOn":
         opt['Omg'] = np.array([float(num.strip()) for num in opt['Omg'].split(',')])*const['icm2ifs']
         opt['Gam'] = np.array([float(num.strip()) for num in opt['Gam'].split(',')])*const['icm2ifs']
         opt['Lam'] = np.array([float(num.strip()) for num in opt['Lam'].split(',')])*const['icm2ifs']
