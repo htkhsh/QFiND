@@ -38,11 +38,14 @@ The code allows for the estimation of frequencies and coefficients in the system
 To customize the simulation, you need to adjust certain parameters in the following files:
 
 - **`input.txt`**: This file contains important global parameters such as:
+  - `method`: Discretization method, such as:
+    - `ID`: ID approach
+    - `BSDO`: BSDO method
   - `temperature`: Specifies the temperature of the system in [$\mathrm{K}$].
   - `Tc` (double): Cutoff time in [$\mathrm{fs}$].
   - `Omegac` (double): Cutoff frequency in [$\mathrm{cm}^{-1}$].
-  - `M` (integer): Number of sample points in the time domain.
-  - `N` (integer): Number of sample points in the frequency domain.
+  - `N_t` (integer): Number of sample points in the time domain.
+  - `N_w` (integer): Number of sample points in the frequency domain.
   - `wmax`: The maximum frequency cutoff used in the numerical integration of the FDT to calculate the BCF.
   - `eps` (double): Threshold for the ID.
   - `frank` (integer): Rank for the ID.  When frank is set to a value larger than -1 ($(\text{frank})>-1$), ID is performed based on the rank.
