@@ -1,0 +1,16 @@
+method = BSDO
+temperature = 50.0
+Tc = 1000.0
+N_t = 500
+wmax_quad = 1000.0
+# BSDO
+Omega_min = -200.0
+Omega_max = 200.0
+N_w = 10000
+Msp = 30
+# spectral density
+stype = PWR
+# PWR
+s = 0.25
+gamc = 53.0
+alpha = 5.0
