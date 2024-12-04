@@ -11,8 +11,9 @@ kb = const['kb']
 icm2ifs = const['icm2ifs']
 Temp = opt['temperature']
 stype = opt['stype']
-Omega_max = opt['Omega_max']
-bho = hbar*1e15/kb/Temp
+wmax_quad = opt['wmax_quad']
+if Temp > 0.0:
+    beta = hbar*1e15/kb/Temp
 
 # Real part of a BCF
 def S_exact(t):
@@ -20,12 +21,12 @@ def S_exact(t):
         def integrand_0K(w):
             res = spectral_density(stype, w, icm2ifs) * np.cos(w * t) / np.pi
             return res
-        res, err = quad(integrand_0K, 0.0, Omega_max*icm2ifs, epsabs=1e-12)
+        res, err = quad(integrand_0K, 0.0, wmax_quad*icm2ifs, epsabs=1e-12)
     else:
         def integrand(w):
-            res = spectral_density(stype, w, icm2ifs) / np.tanh(0.5 * bho * w) * np.cos(w * t) / np.pi
+            res = spectral_density(stype, w, icm2ifs) / np.tanh(0.5 * beta * w) * np.cos(w * t) / np.pi
             return res
-        res, err = quad(integrand, 0.0, Omega_max*icm2ifs, epsabs=1e-12)
+        res, err = quad(integrand, 0.0, wmax_quad*icm2ifs, epsabs=1e-12)
     return res
 
 # Imaginary part of a BCF
@@ -33,5 +34,5 @@ def A_exact(t):
     def integrand(w):
         res = -spectral_density(stype, w, icm2ifs) * np.sin(w * t) / np.pi
         return res
-    res, err = quad(integrand, 0.0, Omega_max*icm2ifs, epsabs=1e-12)
+    res, err = quad(integrand, 0.0, wmax_quad*icm2ifs, epsabs=1e-12)
     return res

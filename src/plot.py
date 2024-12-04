@@ -32,4 +32,4 @@ def plot_bcf(t, exact, approx, error):
 
     plt.subplots_adjust(left=0.18, right=0.95, top=0.95, bottom=0.11, hspace=0, wspace=0)
     plt.savefig('bcf.png')
-    plt.show()
+    #plt.show()

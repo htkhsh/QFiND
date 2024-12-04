@@ -1,0 +1,17 @@
+method = ID
+temperature = 300.0
+wmax_quad = 1000.0
+# ID
+Tc = 1000.0
+N_t = 500
+Omega_min = -500.0
+Omega_max = 500.0
+N_w = 2000
+eps = 1e-3
+frank = 0
+# spectral density
+stype = PWR
+# PWR
+s = 1.0
+gamc = 53.0
+alpha = 5.0

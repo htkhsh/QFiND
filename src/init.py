@@ -18,28 +18,39 @@ def setpara(f):
             key, value = line.split(" = ")
             opt[key.strip()] = value.strip()
         f.close()
+
     # Parse standard options
     opt['temperature'] = float(opt['temperature'])
     opt['Tc'] = float(opt['Tc'])
     opt['N_t'] = int(opt['N_t'])
-    opt['Omegac'] = float(opt['Omegac'])
-    opt['Omega_max'] = float(opt['Omega_max'])
+    opt['wmax_quad'] = float(opt['wmax_quad'])
+
+    # Parse method options
     if opt['method'] == "ID":
+        opt['Omega_min'] = float(opt['Omega_min']) 
+        opt['Omega_max'] = float(opt['Omega_max'])
         opt['N_w'] = int(opt['N_w'])
         opt['eps'] = float(opt['eps'])
         opt['frank'] = int(opt['frank'])
-        opt['rand'] = bool(int(opt['rand']))
+        #opt['rand'] = bool(int(opt['rand']))
     elif opt['method'] == "BSDO":
-        opt['Nbsdo'] = int(opt['Nbsdo'])
-        opt['Omegac'] = float(opt['Omegac'])
+        opt['Omega_min'] = float(opt['Omega_min']) 
+        opt['Omega_max'] = float(opt['Omega_max'])
+        opt['Msp'] = int(opt['Msp'])
         opt['N_w'] = int(opt['N_w'])
-    # spectral density
+    elif opt['method'] == "LOG":
+        opt['Msp'] = int(opt['Msp'])
+        opt['Omega_max'] = float(opt['Omega_max'])
+    elif opt['method'] == "MDM":
+        opt['Msp'] = int(opt['Msp'])
+        opt['Omega_max'] = float(opt['Omega_max'])
+
+    # Parse spectral density options
     if opt['stype'] == "PWR":
         opt['s'] = float(opt['s'])
         opt['alpha'] = float(opt['alpha'])/float(opt['gamc'])
         opt['gamc'] = float(opt['gamc'])
-    # TMn
-    elif opt['stype'] == "TMn" or opt['stype'] == "BOn":
+    elif opt['stype'] == "TM" or opt['stype'] == "BO":
         opt['Omg'] = np.array([float(num.strip()) for num in opt['Omg'].split(',')])*const['icm2ifs']
         opt['Gam'] = np.array([float(num.strip()) for num in opt['Gam'].split(',')])*const['icm2ifs']
         opt['Lam'] = np.array([float(num.strip()) for num in opt['Lam'].split(',')])*const['icm2ifs']

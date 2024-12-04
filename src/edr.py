@@ -6,7 +6,7 @@ from scipy.linalg.interpolative import interp_decomp, reconstruct_skel_matrix, r
 from scipy.optimize import nnls
 
 icm2ifs = const['icm2ifs']
-def edr_id(N_t, N_w, tc, omegac, eps, frank, rand=False):
+def edr_id(N_t, N_w, tc, omega_min, omega_max, eps, frank, rand=False):
     """
     Perform frequency estimation using interpolative decomposition (ID) and NNLS.
 
@@ -14,7 +14,8 @@ def edr_id(N_t, N_w, tc, omegac, eps, frank, rand=False):
     - N_t (int): Number of time points.
     - N_w (int): Number of frequency points.
     - tc (float): Maximum time value.
-    - omegac (float): Maximum frequency value.
+    - omega_min (float): Minimum frequency value.
+    - omega_max (float): Maximum frequency value.
     - eps (float): Error tolerance for ID.
     - krank (int): Rank for the ID. If smaller than 1, ID uses error tolerance.
 
@@ -25,7 +26,7 @@ def edr_id(N_t, N_w, tc, omegac, eps, frank, rand=False):
     - krank (int): Updated rank after ID.
     """
     # Generate time mesh tf and frequency mesh wf
-    t, w = equispaced_mesh(N_t,N_w,tc,omegac)
+    t, w = equispaced_mesh(N_t,N_w,tc,omega_min,omega_max)
 
     # Create core matrix Kf
     f = create_integrand(N_t,N_w,t,w)
@@ -158,7 +159,7 @@ def edr_coef(t, B):
     return g, err
 
 
-def equispaced_mesh(N_t, N_w, tc, omegac):
+def equispaced_mesh(N_t, N_w, tc, omega_min, omega_max):
     """
     Generate equispaced time and frequency grids.
 
@@ -166,7 +167,8 @@ def equispaced_mesh(N_t, N_w, tc, omegac):
     - N_t (int): Number of time points.
     - N_w (int): Number of frequency points.
     - tc (float): Maximum time value.
-    - omegac (float): Maximum frequency value.
+    - omega_min (float): Minimum frequency value.
+    - omega_max (float): Maximum frequency value.
 
     Returns:
     - t (ndarray): Time grid.
@@ -176,7 +178,8 @@ def equispaced_mesh(N_t, N_w, tc, omegac):
     t = np.linspace(0,tc,N_t)
 
     # Frequency grid (w)
-    w = np.linspace(-omegac,omegac,N_w)
+    w = np.linspace(omega_min,omega_max,N_w)
+    w = w * icm2ifs
 
     return t, w
 

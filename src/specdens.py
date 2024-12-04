@@ -9,7 +9,8 @@ hbar = const['hbar']
 kb = const['kb'] 
 Temp = opt['temperature']
 stype = opt['stype']
-bho = hbar*1e15/kb/Temp
+if Temp > 0.0:
+    beta = hbar*1e15/kb/Temp
 
 def spectral_density(stype, omega, nrm=1.0):
     if stype == "PWR":
@@ -22,13 +23,16 @@ def spectral_density(stype, omega, nrm=1.0):
         res = 0.0 
     return res
 
+def sdens(omega, nrm=1.0):
+    res = spectral_density(stype, omega, nrm)
+    return res
 
 def sbeta(omega, nrm=1.0):
     if Temp == 0.0:
         res = np.sign(omega) * spectral_density(stype, np.abs(omega), nrm) / np.pi
     else:
         res = (np.sign(omega) * spectral_density(stype, np.abs(omega), nrm) *
-               (1.0 / np.tanh(0.5 * bho*icm2ifs/nrm * omega) + 1.0) / (2.0 * np.pi))
+               (1.0 / np.tanh(0.5 * beta*icm2ifs/nrm * omega) + 1.0) / (2.0 * np.pi))
     return res
 
 

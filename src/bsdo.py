@@ -9,39 +9,34 @@ f = open(str(sys.argv[1]), mode='r')
 setpara(f)
 icm2ifs = const['icm2ifs']
 N_t = opt['N_t']
-N_w = opt['N_w']
 Tc = opt['Tc']
-Temp = opt['temperature']
-Omegac = opt['Omegac']
-Nbsdo = opt['Nbsdo']
+#Temp = opt['temperature']
 
-def bsdo(N_w, Omegac):
+def bsdo(N_w, Omega_min, Omega_max, Msp):
     """
     Compute the discretization of the spectral density using the BSDO method.
 
     Parameters:
     - N_w (int) : The number of discretization points.
-    - Omegac (float): The cutoff frequency.
+    - Omega_min (float): The minimum frequency.
+    - Omega_max (float): The maximum frequency.
         
     Returns:
     - k (ndarray) : The discretized frequencies.
     - zk (ndarray) : The squared first components of the eigenvectors (weights).
     """
-    if Temp < 1e-10:
-        w = np.linspace(1e-15, Omegac, N_w) 
-    else:
-        w = np.linspace(-Omegac, Omegac, N_w) 
+    w = np.linspace(Omega_min, Omega_max, N_w) 
     j = sbeta(w)
     j[j < 0] = 0.0 
 
     wj = np.column_stack((w, j))
 
     # Compute discretized frequencies (wd) and weights (zd)
-    wk, zk = orthpoly_discretization(Nbsdo, wj)
-    if Temp < 1e-10:
-        norm = quad(lambda w: sbeta(w), 0, Omegac)[0]
+    wk, zk = orthpoly_discretization(Msp, wj)
+    if Omega_min < 0:
+        norm = quad(lambda w: sbeta(w), Omega_min, 0)[0] + quad(lambda w: sbeta(w), 0, Omega_max)[0]
     else:
-        norm = quad(lambda w: sbeta(w), -Omegac, 0)[0] + quad(lambda w: sbeta(w), 0, Omegac)[0]
+        norm = quad(lambda w: sbeta(w), Omega_min, Omega_max)[0]
     zk = zk * norm
 
     return wk, zk

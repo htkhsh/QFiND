@@ -1,0 +1,16 @@
+method = MDM
+temperature = 300.0
+Tc = 1000.0
+wmax_quad = 1000.0
+# BSDO
+Omega_min = -300.0
+Omega_max = 180.0
+N_t = 500
+N_w = 2000
+Msp = 500
+# spectral density
+stype = PWR
+# PWR
+s = 0.99
+gamc = 53.0
+alpha = 5.0
