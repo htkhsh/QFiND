@@ -1,14 +1,14 @@
 method = LOG
-temperature = 300.0
+temperature = 50.0
 Tc = 1000.0
 wmax_quad = 1000.0
 N_t = 500
 # Log Discr
 Omega_max = 200.0
-Msp = 150
+Msp = 500
 # spectral density
 stype = PWR
 # PWR
-s = 1.0
+s = 0.25
 gamc = 53.0
 alpha = 5.0

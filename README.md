@@ -1,22 +1,14 @@
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-<script type="text/x-mathjax-config">
- MathJax.Hub.Config({
- tex2jax: {
- inlineMath: [['$', '$'] ],
- displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
- }
- });
-</script>
+# QFiND
 
+This repository contains Python codes for constructing an effective discrete representation of a system-bath model. In other words, this codes provides an approximation of the bath correlation function $C(t)$ for a given spectral density $J(\omega)$
 
-# edr-sd
-
-This repository contains Python codes for constructing an effective discrete representation of a system-bath model. In other words, this codes provides an approximation of the bath correlation function $C(t) for a given spectral density $J(\omega)$
-$$\begin{aligned}
+$$
+\begin{aligned}
 C(t)&=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}\\
 &\approx \sum_{k=1}^M g_k^2 \mathrm{e}^{-i\omega t},\;\omega_k,g_k\in\mathbb{R}\backslash\{0\}
-\end{aligned}$$
+\end{aligned}
+$$
+
 The code allows for the estimation of frequencies and coefficients in the system plus bosonic bath model using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS). 
 
 
@@ -26,7 +18,7 @@ The code allows for the estimation of frequencies and coefficients in the system
 1. Set the required parameters in an input file `input.txt` (see below).  
 2. Run the main script:
    ```
-   python ./src/main.py input.txt
+   python ./src/qfind.py input.txt
    ```
 3. The output will include the estimated frequencies and coefficients (saved as `omega_g.txt`), along with a plot of the resultant BCF (saved as `bcf.png`).
 
@@ -63,10 +55,10 @@ To customize the simulation, you need to adjust certain parameters in the follow
 ### Example Parameter Settings
 
 
-## Cite `EDR-ID`
+## Cite `QFiND`
 If you find the framework useful in your research, we would be grateful if you could cite our publications:
 - H. Takahashi and R. Borrelli, J. Chem. Phys. 161, 151101 (2024). (https://doi.org/10.1063/5.0232232) 
-- H. Takahashi and R. Borrelli, submitted to J. Chem. Phys.
+- H. Takahashi and R. Borrelli, submitted.
 
 Here are the bibtex entries:
 ```bib
@@ -87,7 +79,7 @@ Here are the bibtex entries:
 
 ## Authors
 
-Hideaki Takahashi (takahashi.hideaki.w33@kyoto-u.jp)
+Hideaki Takahashi (hideaki.takahashi@unito.it)
 
 
 ## License

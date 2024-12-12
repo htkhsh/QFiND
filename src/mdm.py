@@ -11,16 +11,17 @@ setpara(f)
 
 icm2ifs = const['icm2ifs']
 wmax_quad = opt['wmax_quad']
-s = opt['s']
-alpha = opt['alpha']
-gamc = opt['gamc']
+if opt['stype'] == 'PWR':
+    s = opt['s']
+    alpha = opt['alpha']
+    gamc = opt['gamc']
 
 def dos(omega):
     return sdens(omega)/omega
 
 def int_dens(omega):
     if opt['stype'] == 'PWR':
-        return  np.pi * alpha * gamc * gammainc(s,omega/gamc)
+        return gamc * gammainc(s,omega/gamc)
     else:
         return quad(lambda w: dos(w), 0.0, omega, epsabs=1e-12)[0]
  

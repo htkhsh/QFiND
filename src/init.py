@@ -51,6 +51,6 @@ def setpara(f):
         opt['alpha'] = float(opt['alpha'])/float(opt['gamc'])
         opt['gamc'] = float(opt['gamc'])
     elif opt['stype'] == "TM" or opt['stype'] == "BO":
-        opt['Omg'] = np.array([float(num.strip()) for num in opt['Omg'].split(',')])*const['icm2ifs']
-        opt['Gam'] = np.array([float(num.strip()) for num in opt['Gam'].split(',')])*const['icm2ifs']
-        opt['Lam'] = np.array([float(num.strip()) for num in opt['Lam'].split(',')])*const['icm2ifs']
+        opt['Omg'] = np.array([float(num.strip()) for num in opt['Omg'].split(',')])
+        opt['Gam'] = np.array([float(num.strip()) for num in opt['Gam'].split(',')])
+        opt['Lam'] = np.array([float(num.strip()) for num in opt['Lam'].split(',')])
