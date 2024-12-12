@@ -5,7 +5,7 @@ This repository contains Python codes for constructing an effective discrete rep
 $$
 \begin{aligned}
 C(t)&=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}\\
-&\approx \sum_{k=1}^M g_k^2 \mathrm{e}^{-i\omega t},\;\omega_k,g_k\in\mathbb{R}\backslash\{0\}
+&\approx \sum_{k=1}^M g_k^2 \mathrm{e}^{-i\omega_k t},\;\omega_k,g_k\in\mathbb{R}\backslash\{0\}
 \end{aligned}
 $$
 
