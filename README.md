@@ -7,8 +7,8 @@ $$
 C(t)&=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}\\
 &\approx \sum_{k=1}^M g_k^2 \mathrm{e}^{-i\omega_k t},\quad \omega_k,g_k \in \mathbb{R} \backslash \{0\}
 \end{aligned}
-$$
-
+$\omega_k,g_k \in \mathbb{R} \backslash \{0\}$.
+where $
 The code allows for the estimation of frequencies and coefficients in the system plus bosonic bath model using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS). 
 
 
@@ -31,8 +31,10 @@ To customize the simulation, you need to adjust certain parameters in the follow
 
 - **`input.txt`**: This file contains important global parameters such as:
   - `method`: Discretization method, such as:
-    - `ID`: ID approach
     - `BSDO`: BSDO method
+    - `ID`: ID approach
+    - `LOG`: Logarithmic discretization
+    - `MDM`: Mode density method
   - `temperature`: Specifies the temperature of the system in $[\mathrm{K}]$.
   - `Tc` (double): Cutoff time in $[\mathrm{fs}]$.
   - `Omega_min` (double): Minimum cutoff frequency in $[\mathrm{cm}^{-1}]$.
@@ -42,12 +44,12 @@ To customize the simulation, you need to adjust certain parameters in the follow
   - `wmax_quad`: The maximum frequency cutoff used in the numerical integration.
   - `eps` (double): Threshold for the ID.
   - `frank` (integer): Rank for the ID.  When frank is set to a value larger than 0 (`frank`>0), ID is performed based on the rank.
-  - `stype`: The type of spectral density $J(\omega)$ (`"PWR"`, `"TMn"`, `"BOn"`).  The program supports several types of spectral density, such as:
+  - `stype`: The type of spectral density $J(\omega)$ (`PWR`, `TM`, `BO`).  The program supports several types of spectral density, such as:
     - Power-law with exponential cutoff (`PWR`) 
       $$J(\omega)=\pi\alpha\omega_c^{1-s}\omega^s\mathrm{e}^{-\omega/\omega_c}$$
-    - Sum of Tannor-Meyer type spectral densities (`TMn`)
+    - Sum of Tannor-Meyer type spectral densities (`TM`)
       $$J(\omega)=\sum_{j=1}^n \frac{4\Gamma_j\lambda_j(\Omega_j^2+\Gamma_j^2)\omega}{\left[(\omega+\Omega_j)^2+\Gamma_j^2\right]\left[(\omega-\Omega_j)^2+\Gamma_j^2\right]}$$
-    - Sum of Brownian spectral densities (`BOn`)
+    - Sum of Brownian spectral densities (`BO`)
       $$J(\omega)=\sum_{j=1}^n 2\lambda_j\frac{\Gamma_j \Omega_j^2\omega}{(\omega^2-\Omega_j^2)^2+\Gamma_j^2\Omega_j^2}$$
   - Parameters for specific spectral density types, such as:
     - `s`, `alpha`, `gamc` for Power-law Exponential (`PWR`).
