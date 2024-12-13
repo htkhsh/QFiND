@@ -5,7 +5,7 @@ This repository contains Python codes for constructing an effective discrete rep
 $$
 \begin{aligned}
 C(t)&=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}\\
-&\approx \sum_{k=1}^M g_k^2 \mathrm{e}^{-i\omega_k t},\;\omega_k,g_k\in\mathbb{R}\backslash\{0\}
+&\approx \sum_{k=1}^M g_k^2 \mathrm{e}^{-i\omega_k t},\omega_k,g_k\in\mathbb{R}\backslash\{0\}
 \end{aligned}
 $$
 
@@ -47,7 +47,7 @@ To customize the simulation, you need to adjust certain parameters in the follow
     - Sum of Tannor-Meyer type spectral densities (`TMn`)
       $$J(\omega)=\sum_{j=1}^n \frac{4\Gamma_j\lambda_j(\Omega_j^2+\Gamma_j^2)\omega}{\left[(\omega+\Omega_j)^2+\Gamma_j^2\right]\left[(\omega-\Omega_j)^2+\Gamma_j^2\right]}$$
     - Sum of Brownian spectral densities (`BOn`)
-      $$J(\omega)=\sum_{j=1}^n 2\lambda_j\frac{\zeta_j \Omega_j^2\omega}{(\omega^2-\Omega_j^2)^2+\zeta_j^2\Omega_j^2}$$
+      $$J(\omega)=\sum_{j=1}^n 2\lambda_j\frac{\Gamma_j \Omega_j^2\omega}{(\omega^2-\Omega_j^2)^2+\Gamma_j^2\Omega_j^2}$$
   - Parameters for specific spectral density types, such as:
     - `s`, `alpha`, `gamc` for Power-law Exponential (`PWR`).
     - `Omg`, `Gam`, `Lam` for Tannor-Meyer (`TMn`) and Brownian Oscillator (`BOn`).
