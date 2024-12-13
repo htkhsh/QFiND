@@ -33,14 +33,14 @@ To customize the simulation, you need to adjust certain parameters in the follow
   - `method`: Discretization method, such as:
     - `ID`: ID approach
     - `BSDO`: BSDO method
-  - `temperature`: Specifies the temperature of the system in [$\mathrm{K}$].
-  - `Tc` (double): Cutoff time in [$\mathrm{fs}$].
-  - `Omegac` (double): Cutoff frequency in [$\mathrm{cm}^{-1}$].
+  - `temperature`: Specifies the temperature of the system in $[\mathrm{K}]$.
+  - `Tc` (double): Cutoff time in [fs].
+  - `Omegac` (double): Cutoff frequency in [cm^{-1}].
   - `N_t` (integer): Number of sample points in the time domain.
   - `N_w` (integer): Number of sample points in the frequency domain.
   - `wmax`: The maximum frequency cutoff used in the numerical integration of the FDT to calculate the BCF.
   - `eps` (double): Threshold for the ID.
-  - `frank` (integer): Rank for the ID.  When frank is set to a value larger than -1 ($(\text{frank})>-1$), ID is performed based on the rank.
+  - `frank` (integer): Rank for the ID.  When frank is set to a value larger than -1 ($(\text{frank})>0$), ID is performed based on the rank.
   - `stype`: The type of spectral density $J(\omega)$ (`"PWR"`, `"TMn"`, `"BOn"`).  The program supports several types of spectral density, such as:
     - Power-law with exponential cutoff (`PWR`) 
       $$J(\omega)=\pi\alpha\omega_c^{1-s}\omega^s\mathrm{e}^{-\omega/\omega_c}$$
@@ -50,15 +50,15 @@ To customize the simulation, you need to adjust certain parameters in the follow
       $$J(\omega)=\sum_{j=1}^n 2\lambda_j\frac{\Gamma_j \Omega_j^2\omega}{(\omega^2-\Omega_j^2)^2+\Gamma_j^2\Omega_j^2}$$
   - Parameters for specific spectral density types, such as:
     - `s`, `alpha`, `gamc` for Power-law Exponential (`PWR`).
-    - `Omg`, `Gam`, `Lam` for Tannor-Meyer (`TMn`) and Brownian Oscillator (`BOn`).
+    - `Omg`, `Gam`, `Lam` for Tannor-Meyer type (`TM`) and Brownian Oscillator (`BO`).
 
 ### Example Parameter Settings
-
+See the directory `./examples`.
 
 ## Cite `QFiND`
 If you find the framework useful in your research, we would be grateful if you could cite our publications:
 - H. Takahashi and R. Borrelli, J. Chem. Phys. 161, 151101 (2024). (https://doi.org/10.1063/5.0232232) 
-- H. Takahashi and R. Borrelli, submitted.
+- H. Takahashi and R. Borrelli, submitted to J. .
 
 Here are the bibtex entries:
 ```bib
@@ -85,7 +85,5 @@ Hideaki Takahashi (hideaki.takahashi@unito.it)
 ## License
 
 This project is distributed under the [BSD 3-clause License](./LICENSE.md).
-
-## References
 
 
