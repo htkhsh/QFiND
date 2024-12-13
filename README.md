@@ -34,7 +34,7 @@ To customize the simulation, you need to adjust certain parameters in the follow
     - `ID`: ID approach
     - `BSDO`: BSDO method
   - `temperature`: Specifies the temperature of the system in $[\mathrm{K}]$.
-  - `Tc` (double): Cutoff time in [fs].
+  - `Tc` (double): Cutoff time in $[\mathrm{fs}]$.
   - `Omegac` (double): Cutoff frequency in [cm^{-1}].
   - `N_t` (integer): Number of sample points in the time domain.
   - `N_w` (integer): Number of sample points in the frequency domain.
