@@ -7,8 +7,8 @@ $$
 C(t)&=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}\\
 &\approx \sum_{k=1}^M g_k^2 \mathrm{e}^{-i\omega_k t},\quad \omega_k,g_k \in \mathbb{R} \backslash \{0\}
 \end{aligned}
-$\omega_k,g_k \in \mathbb{R} \backslash \{0\}$.
-where $
+$$
+where $\omega_k,g_k \in \mathbb{R} \backslash \{0\}$.
 The code allows for the estimation of frequencies and coefficients in the system plus bosonic bath model using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS). 
 
 
