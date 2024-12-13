@@ -62,7 +62,7 @@ See the directory `./examples`.
 ## Cite `QFiND`
 If you find the framework useful in your research, we would be grateful if you could cite our publications:
 - H. Takahashi and R. Borrelli, J. Chem. Phys. 161, 151101 (2024). (https://doi.org/10.1063/5.0232232) 
-- H. Takahashi and R. Borrelli, submitted to J. Chem. Theory Comput.
+- H. Takahashi and R. Borrelli, submitted.
 
 Here are the bibtex entries:
 ```bib
