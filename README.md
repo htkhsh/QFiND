@@ -5,7 +5,7 @@ This repository contains Python codes for constructing an effective discrete rep
 $$
 \begin{aligned}
 C(t)&=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\mathrm{coth}\left(\frac{\beta \omega}{2}\right)+1\right] \mathrm{e}^{-i \omega t}\\
-&\approx \sum_{k=1}^M g_k^2 \mathrm{e}^{-i\omega_k t},\quad \omega_k,g_k \in \mathbb{R} \backslash\{0\}
+&\approx \sum_{k=1}^M g_k^2 \mathrm{e}^{-i\omega_k t},\quad \omega_k,g_k \in \mathbb{R} \backslash \{0\}
 \end{aligned}
 $$
 
@@ -35,12 +35,13 @@ To customize the simulation, you need to adjust certain parameters in the follow
     - `BSDO`: BSDO method
   - `temperature`: Specifies the temperature of the system in $[\mathrm{K}]$.
   - `Tc` (double): Cutoff time in $[\mathrm{fs}]$.
-  - `Omegac` (double): Cutoff frequency in [cm^{-1}].
+  - `Omega_min` (double): Minimum cutoff frequency in $[\mathrm{cm}^{-1}]$.
+  - `Omega_max` (double): Maximum cutoff frequency in $[\mathrm{cm}^{-1}]$.
   - `N_t` (integer): Number of sample points in the time domain.
   - `N_w` (integer): Number of sample points in the frequency domain.
-  - `wmax`: The maximum frequency cutoff used in the numerical integration of the FDT to calculate the BCF.
+  - `wmax_quad`: The maximum frequency cutoff used in the numerical integration.
   - `eps` (double): Threshold for the ID.
-  - `frank` (integer): Rank for the ID.  When frank is set to a value larger than -1 ($(\text{frank})>0$), ID is performed based on the rank.
+  - `frank` (integer): Rank for the ID.  When frank is set to a value larger than 0 (`frank`>0), ID is performed based on the rank.
   - `stype`: The type of spectral density $J(\omega)$ (`"PWR"`, `"TMn"`, `"BOn"`).  The program supports several types of spectral density, such as:
     - Power-law with exponential cutoff (`PWR`) 
       $$J(\omega)=\pi\alpha\omega_c^{1-s}\omega^s\mathrm{e}^{-\omega/\omega_c}$$
