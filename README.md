@@ -9,7 +9,7 @@ C(t)&=\frac{1}{2\pi} \int_{-\infty}^{\infty} \mathrm{d}\omega J(\omega)\left[\ma
 \end{aligned}
 $$
 
-where $`\omega_k,g_k \in \mathbb{R} \backslash \{0\}`$.
+where $`\omega_k,g_k \in ℝ \backslash \{0\}`$.
 The code allows for the estimation of frequencies and coefficients in the system plus bosonic bath model using Interpolative Decomposition (ID) and Non-negative Least Squares (NNLS). 
 
 
