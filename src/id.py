@@ -29,7 +29,7 @@ def edr_id(N_t, N_w, tc, omega_min, omega_max, eps, frank, rand=False):
     t, w = equispaced_mesh(N_t,N_w,tc,omega_min,omega_max)
 
     # Create core matrix Kf
-    f = create_integrand(N_t,N_w,t,w)
+    f = create_integrand(t,w)
 
     # Perform Interpolative Decomposition (ID)
     if frank < 1:
@@ -184,19 +184,19 @@ def equispaced_mesh(N_t, N_w, tc, omega_min, omega_max):
     return t, w
 
 
-def create_integrand(N_t, N_w, t, w):
+def create_integrand(t, w):
     """
     Create the matrix K for the interpolative decomposition.
 
     Parameters:
-    - N_t (int): Number of time points.
-    - N_w (int): Number of frequency points.
     - t (ndarray): Time grid.
     - w (ndarray): Frequency grid.
 
     Returns:
     - f (ndarray): Matrix K with shape (2*N_t, N_w).
     """
+    N_t = len(t)
+    N_w = len(w)
     f = np.zeros((2*N_t,N_w),dtype=float)
 
     # Fill the first M rows of K with the real part of an integrand

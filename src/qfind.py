@@ -3,7 +3,7 @@ import sys
 from init import setpara, const, opt
 from eval import calc_error
 from specdens import sbeta
-from edr import edr_id
+from id import edr_id
 from bsdo import bsdo
 from logarithmic import log_disc
 from mdm import mdm_ohmic, mdm_g
