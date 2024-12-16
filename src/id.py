@@ -1,8 +1,8 @@
 import numpy as np
 from init import const
+from id_sub import id_freq_eps, id_freq_rank
 from specdens import sbeta
 from corrfunc import S_exact, A_exact
-from scipy.linalg.interpolative import interp_decomp, reconstruct_skel_matrix, reconstruct_matrix_from_id
 from scipy.optimize import nnls
 
 icm2ifs = const['icm2ifs']
@@ -64,94 +64,29 @@ def edr_id(N_t, N_w, tc, omega_min, omega_max, eps, frank, rand=False):
     return Nsp, wk, zk, frank
 
 
-def id_freq_eps(f, eps, rnd):
-    """
-    Perform interpolative decomposition on matrix K with error tolerance eps.
-
-    Parameters:
-    - f (ndarray): Input matrix of shape (M2, N).
-    - eps (float): Error tolerance for the decomposition.
-    - rnd (bool): Randomized or deterministic ID.
-
-    Returns:
-    - frank (int): Rank of the approximation.
-    - idx (ndarray): Indices of the selected columns.
-    - B (ndarray): Matrix containing selected columns of f.   
-    - err (float): Maximum absolute error between the original and approximated matrix.
-    """
-
-    f0 = f.copy()
-
-    # Perform the interpolative decomposition
-    frank, idx, proj = interp_decomp(f0, eps, rand=rnd)
-
-    # Extract the selected columns to form matrix B
-    B = reconstruct_skel_matrix(f0, frank, idx)
-
-    # Reconstruct the approximated matrix K1
-    f1 = reconstruct_matrix_from_id(B, idx, proj)
-
-    # Compute the maximum absolute error
-    err = np.max(np.abs(f1 - f))
-
-    return frank, idx, B, err
-
-
-def id_freq_rank(f, frank, rnd):
-    """
-    Perform interpolative decomposition on matrix K with specified rank krank.
-
-    Parameters:
-    - f (ndarray): Input matrix of shape (M2, N).  
-    - frank (int) : Desired rank for the approximation.
-    - rnd (bool): Randomized or deterministic ID.
-
-    Returns:
-    - idx (ndarray): Indices of the selected columns.
-    - B (ndarray): Matrix containing selected columns of f.   
-    - err (float): Maximum absolute error between the original and approximated matrix.
-    """
-
-    f0 = f.copy()
-
-    # Perform the interpolative decomposition with specified rank
-    idx, proj = interp_decomp(f0, frank, rand=rnd)
-
-    # Extract the selected columns to form matrix B
-    B = reconstruct_skel_matrix(f0, frank, idx)
-
-    # Reconstruct the approximated matrix K1
-    f1 = reconstruct_matrix_from_id(B, idx, proj)
-
-    # Compute the maximum absolute error
-    err = np.max(np.abs(f1 - f))
-
-    return idx, B, err
-
-
 def edr_coef(t, B):
     """
     Use non-negative least squares (NNLS) to estimate coefficients g.
 
     Parameters:
-    - tf (ndarray): Time array (size: M)
-    - krank (int): Approximation rank
-    - B (ndarray): Input matrix (size: (2*M, frank))
+    - t (ndarray): Time array (size: N_t)
+    - frank (int): Approximation rank
+    - B (ndarray): Input matrix (size: (2*N_t, frank))
 
     Returns:
     - g (ndarray): Estimated coefficients (size: frank)
     - err (float): Estimation error
     """
-    N = len(t)
-    c = np.zeros(2*N)
+    N_t = len(t)
+    c = np.zeros(2*N_t)
 
     # Construct vector c with S_exact(t) and A_exact(t)
-    for i in range(N):
+    for i in range(N_t):
         ti = t[i]
         c[i] = S_exact(ti)
-    for i in range(N):
+    for i in range(N_t):
         ti = t[i]
-        c[N + i] = A_exact(ti)
+        c[N_t + i] = A_exact(ti)
 
     # Solve the NNLS problem: minimize ||B * g - c|| subject to g >= 0
     g, err = nnls(B, c)
@@ -186,25 +121,25 @@ def equispaced_mesh(N_t, N_w, tc, omega_min, omega_max):
 
 def create_integrand(t, w):
     """
-    Create the matrix K for the interpolative decomposition.
+    Create the matrix f for the interpolative decomposition.
 
     Parameters:
     - t (ndarray): Time grid.
     - w (ndarray): Frequency grid.
 
     Returns:
-    - f (ndarray): Matrix K with shape (2*N_t, N_w).
+    - f (ndarray): Matrix f with shape (2*N_t, N_w).
     """
     N_t = len(t)
     N_w = len(w)
     f = np.zeros((2*N_t,N_w),dtype=float)
 
-    # Fill the first M rows of K with the real part of an integrand
+    # Fill the first N_t rows of f with the real part of an integrand
     for i in range(N_t):
         for j in range(N_w):
             f[i, j] = sbeta(w[j],icm2ifs) * np.cos(w[j] * t[i])
     
-    # Fill the next M rows of K with the imaginary part of an integrand
+    # Fill the next N_t rows of f with the imaginary part of an integrand
     for i in range(N_t, 2*N_t):
         for j in range(N_w):
             f[i, j] = -sbeta(w[j],icm2ifs) * np.sin(w[j] * t[i-N_t])
