@@ -48,7 +48,6 @@ elif opt['method'] == 'MDM':
         wk, zk = mdm_ohmic(Msp, gamc, Omega_max)
     else:
         wk, zk = mdm_g(Msp, Omega_max)
-
     wk = wk * icm2ifs
     zk = zk * icm2ifs
 

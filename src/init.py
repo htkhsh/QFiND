@@ -44,6 +44,10 @@ def setpara(f):
     elif opt['method'] == "MDM":
         opt['Msp'] = int(opt['Msp'])
         opt['Omega_max'] = float(opt['Omega_max'])
+    else:
+        print("Invalid method: ", opt['method'])
+        print("Please choose from ID, BSDO, LOG, MDM.")
+        exit()
 
     # Parse spectral density options
     if opt['stype'] == "PWR":
@@ -54,3 +58,7 @@ def setpara(f):
         opt['Omg'] = np.array([float(num.strip()) for num in opt['Omg'].split(',')])
         opt['Gam'] = np.array([float(num.strip()) for num in opt['Gam'].split(',')])
         opt['Lam'] = np.array([float(num.strip()) for num in opt['Lam'].split(',')])
+    else:
+        print("Invalid spectral density type: ", opt['stype'])
+        print("Please choose from PWR, TM, BO.")
+        exit()
