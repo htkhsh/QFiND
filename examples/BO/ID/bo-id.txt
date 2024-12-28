@@ -1,0 +1,16 @@
+method = ID
+temperature = 300.0
+wmax_quad = 6000.0
+# ID
+Tc = 200.0
+N_t = 400
+Omega_min = -4000.0
+Omega_max = 4000.0 
+N_w = 4000
+eps = 2e-2
+frank = 0
+# spectral density      
+stype = BO           
+Omg = 1.4e3            
+Gam = 2.0e2         
+Lam = 6.0e2   

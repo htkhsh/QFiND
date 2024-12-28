@@ -58,9 +58,9 @@ calc_error(wk, zk)
 filename = "omega_g.txt"
 with open(filename, 'w') as of:
     of.write("================================================================\n")
-    of.write("         omega_k [cm^-1]          z_k [cm^-1]                   \n")
+    of.write("         omega_k [cm^-1]          g_k [cm^-1]               \n")
     of.write("================================================================\n")
     for i in range(Msp):
         of.write('{:25.15e} {:25.15e}\n'.format(
-            wk[i] / icm2ifs, zk[i] / icm2ifs
+            wk[i] / icm2ifs, np.sqrt(zk[i]*sbeta(wk[i], icm2ifs)) / icm2ifs**2.0
         ))
