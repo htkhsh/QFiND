@@ -1,0 +1,18 @@
+BCF_type = Mix
+method = BSDO
+temperature = 50.0
+Tc = 1000.0
+wmax_quad = 1000.0
+# BSDO
+Omega_min = -300.0
+Omega_max = 300.0
+N_t = 300
+N_tau = 40
+N_w = 1000
+Msp = 36
+# spectral density
+stype = PWR
+# PWR
+s = 1.0
+gamc = 53.0
+alpha = 5.0

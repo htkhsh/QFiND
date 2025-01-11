@@ -1,0 +1,14 @@
+method = ID
+temperature = 0.0
+Tc = 500.0
+Omega_min = 1.0
+Omega_max = 4000.0
+Omega_max_integral = 4000.0
+N_t = 500
+N_tau = 20
+N_w = 2000
+eps = 1e-3
+frank = 20
+rand = 0
+# spectral density
+stype = AtCry

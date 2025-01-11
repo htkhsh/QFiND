@@ -1,0 +1,19 @@
+method = ID
+temperature = 50.0
+Tc = 1000.0
+Omegac = 200.0
+Omega_max = 1000.0
+N_t = 500
+N_tau = 20
+N_w = 2000
+eps = 1e-3
+frank = 20
+rand = 0
+# BSDO
+Nbsdo = 40
+# spectral density
+stype = PWR
+# PWR
+s = 0.25
+gamc = 53.0
+alpha = 5.0
