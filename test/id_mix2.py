@@ -131,12 +131,12 @@ def create_integrand(t, tau, w, beta):
     for i in range(N_t):
         for j in range(N_tau):
             for k in range(N_w):
-                f[i*N_tau+j, k] = sdens(w[k],icm2ifs) * np.cosh(0.5 * beta * w[k] - w[k] * tau[j]) / np.sinh(0.5 * beta * w[k]) * np.cos(w[k] * t[i]) 
+                f[i*N_tau+j, k] = sdens(w[k],icm2ifs) * np.cosh(0.5 * beta * w[k] - w[k] * tau[j]) / np.sinh(0.5 * beta * w[k]) * np.cos(w[k] * t[i]) / np.pi
     
     # Fill the next M rows of K with the imaginary part of an integrand
     for i in range(N_t, 2*N_t):
         for j in range(N_tau):
             for k in range(N_w):
-                f[i*N_tau+j, k] = sdens(w[k],icm2ifs) * np.cosh(0.5 * beta * w[k] - w[k] * tau[j]) / np.sinh(0.5 * beta * w[k]) * np.sin(w[k] * t[i-N_t]) 
+                f[i*N_tau+j, k] = sdens(w[k],icm2ifs) * np.cosh(0.5 * beta * w[k] - w[k] * tau[j]) / np.sinh(0.5 * beta * w[k]) * np.sin(w[k] * t[i-N_t]) / np.pi
     
     return f
