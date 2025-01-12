@@ -6,6 +6,7 @@ from specdens import sbeta, s_be
 from id import edr_id
 from id_beta import edr_id_beta
 from id_mix import edr_id_mix
+#from id_mix2 import edr_id_mix
 from bsdo import bsdo, sdens
 
 # Parameter setting

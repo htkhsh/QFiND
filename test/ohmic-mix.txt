@@ -1,13 +1,13 @@
 BCF_type = Mix
 method = ID
-temperature = 50.0
+temperature = 300.0
 Tc = 1000.0
-Omega_min = -400.0 
+Omega_min = -400.0
 Omega_max = 400.0 
 wmax_quad = 1000.0
 N_t = 200
-N_tau = 100
-N_w = 1000
+N_tau = 20
+N_w = 500
 eps = 1e-2
 frank = 0
 rand = 0

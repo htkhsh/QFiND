@@ -1,7 +1,7 @@
 import numpy as np
 from init import const
 from id_sub import id_freq_eps, id_freq_rank
-from specdens import sbeta
+from specdens import sbeta, sdens
 from corrfunc import S_mix, A_mix
 from scipy.optimize import nnls
 
@@ -31,14 +31,7 @@ def edr_id_mix(N_t, N_tau, N_w, tc, beta, omega_min, omega_max, eps, frank, id_i
     t, tau, w = equispaced_mesh(N_t,N_tau,N_w,tc,beta,omega_min,omega_max)
 
     # Create core matrix Kf
-    f = create_integrand(t,tau,w)
-    
-    if id_in_time:
-        print("performing ID in time")
-        frank_s = 5000
-        fT = f.transpose()
-        idx_s, B1, err_s = id_freq_rank(fT, frank_s, True)
-        f = B1.transpose()
+    f = create_integrand(t,tau,w,beta)
 
     # Perform Interpolative Decomposition (ID)
     print("performing ID in frequency")
@@ -53,11 +46,7 @@ def edr_id_mix(N_t, N_tau, N_w, tc, beta, omega_min, omega_max, eps, frank, id_i
     wk = w[idx[:frank]]
 
     # Compute coefficients g using NNLS or another method
-    if id_in_time:
-        s = create_composite_time(t, tau)
-        zk, err2 = edr_coef_s(s, idx_s, B)
-    else:
-        zk, err2 = edr_coef(t, tau, B)
+    zk, err2 = edr_coef(t, tau, B)
 
     ind = np.argsort(wk)
     wk = wk[ind]
@@ -116,38 +105,6 @@ def edr_coef(t, tau, B):
     return g, err
 
 
-def edr_coef_s(s, frank_s, idx_s, B):
-    """
-    Use non-negative least squares (NNLS) to estimate coefficients g.
-
-    Parameters:
-    - s (dict): Composite time array (size: N_s)
-    - frank_s (int): Approximation rank
-    - idx_s (ndarray): Indices of selected composite times (size: N_s)
-    - B (ndarray): Input matrix (size: (N_s, frank))
-
-    Returns:
-    - g (ndarray): Estimated coefficients (size: frank)
-    - err (float): Estimation error
-    """
-    N_s = len(s)
-    c = np.zeros(frank_s)
-
-    # Construct vector c with S_mix(t) and A_mix(t)
-    for i in range(frank_s):
-        t = s[idx_s[i]]['t']
-        tau = s[idx_s[i]]['tau']
-        if i < N_s:
-            c[i] = S_mix(t, tau)
-        else:
-            c[i] = A_mix(t, tau)
-
-    # Solve the NNLS problem: minimize ||B * g - c|| subject to g >= 0
-    g, err = nnls(B, c)
-
-    return g, err
-
-
 def equispaced_mesh(N_t, N_tau, N_w, tc, beta, omega_min, omega_max):
 
     # Real time grid (t)
@@ -161,31 +118,9 @@ def equispaced_mesh(N_t, N_tau, N_w, tc, beta, omega_min, omega_max):
     w = w * icm2ifs
 
     return t, tau, w
-
-def create_composite_time(t, tau):
-    """
-    Create a composite time array.
-
-    Parameters:
-    - t (ndarray): Real time array.
-    - tau (ndarray): Imaginary time array.
-
-    Returns:
-    - s (dict): Composite time.
-    """
-
-    N_t = len(t)
-    N_tau = len(tau)
-    # Dictionary of composite time (s)
-    s = {}
-    for i in range(N_t):
-        for j in range(N_tau):
-            s[i*N_tau+j] = {'t': t[i], 'tau': tau[j]}
-
-    return s
     
 
-def create_integrand(t, tau, w):
+def create_integrand(t, tau, w, beta):
     
     N_t = len(t)
     N_tau = len(tau)
@@ -196,12 +131,12 @@ def create_integrand(t, tau, w):
     for i in range(N_t):
         for j in range(N_tau):
             for k in range(N_w):
-                f[i*N_tau+j, k] = sbeta(w[k],icm2ifs) * np.cos(w[k] * t[i]) * np.exp(-w[k] * tau[j])
+                f[i*N_tau+j, k] = sdens(w[k],icm2ifs) * np.cosh(0.5 * beta * w[k] - w[k] * tau[j]) / np.sinh(0.5 * beta * w[k]) * np.cos(w[k] * t[i]) 
     
     # Fill the next M rows of K with the imaginary part of an integrand
     for i in range(N_t, 2*N_t):
         for j in range(N_tau):
             for k in range(N_w):
-                f[i*N_tau+j, k] = sbeta(w[k],icm2ifs) * np.sin(w[k] * t[i-N_t]) * np.exp(-w[k] * tau[j])
+                f[i*N_tau+j, k] = sdens(w[k],icm2ifs) * np.cosh(0.5 * beta * w[k] - w[k] * tau[j]) / np.sinh(0.5 * beta * w[k]) * np.sin(w[k] * t[i-N_t]) 
     
     return f
