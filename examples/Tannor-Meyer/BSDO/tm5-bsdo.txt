@@ -1,0 +1,15 @@
+method = BSDO
+temperature = 0.0
+wmax_quad = 6000.0
+Tc = 250.0
+N_t = 500
+# BSDO
+Omega_min = 1e-15
+Omega_max = 4000.0 
+N_w = 4000
+Msp = 60
+# spectral density      
+stype = TM             
+Omg = 8.86897e1, 6.35818e2, 1.22862e3, 1.55125e3, 3.42600e3            
+Gam = 1.26769e2, 3.00241e2, 7.55212e1, 2.80269e1, 1.36228e2         
+Lam = 2.63236e3, 2.39033e3, 6.25027e2, 1.28111e3, 1.59876e2   
