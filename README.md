@@ -62,12 +62,12 @@ See the directory `./examples`.
 ## Cite `QFiND`
 If you find the framework useful in your research, we would be grateful if you could cite our publications:
 - H. Takahashi and R. Borrelli, J. Chem. Phys. 161, 151101 (2024). (https://doi.org/10.1063/5.0232232) 
-- H. Takahashi and R. Borrelli, arXiv:2412.13793. (https://doi.org/10.48550/arXiv.2412.13793)
+- H. Takahashi and R. Borrelli, J. Chem. Theory Comput. (2025). (https://doi.org/10.1021/acs.jctc.4c01728)
 
 Here are the bibtex entries:
 ```bib
 @article{TakahashiBorrelli2024JCP,
-  title = {Effective Modeling of Open Quantum Systems by Low-Rank Discretization of Structured Environments},
+  title = {Effective modeling of open quantum systems by low-rank discretization of structured environments},
   author = {Takahashi, Hideaki and Borrelli, Raffaele},
   year = {2024},
   month = oct,
@@ -79,18 +79,13 @@ Here are the bibtex entries:
   doi = {10.1063/5.0232232}
 }
 
-@misc{TakahashiBorrelli2024a,
+@misc{TakahashiBorrelli2025,
   title = {Discretization of {{Structured Bosonic Environments}} at {{Finite Temperature}} by {{Interpolative Decomposition}}: {{Theory}} and {{Application}}},
   shorttitle = {Discretization of {{Structured Bosonic Environments}} at {{Finite Temperature}} by {{Interpolative Decomposition}}},
   author = {Takahashi, Hideaki and Borrelli, Raffaele},
-  year = {2024},
-  month = dec,
-  number = {arXiv:2412.13793},
-  eprint = {2412.13793},
-  primaryclass = {quant-ph},
-  publisher = {arXiv},
-  doi = {10.48550/arXiv.2412.13793},
-  archiveprefix = {arXiv}
+  year = {2025},
+  journal = {Journal of Chemical Theory and Computation}
+  doi = {https://doi.org/10.1021/acs.jctc.4c01728},
 }
 ```
 
