@@ -79,13 +79,16 @@ Here are the bibtex entries:
   doi = {10.1063/5.0232232}
 }
 
-@misc{TakahashiBorrelli2025,
+@article{TakahashiBorrelli2025JCTC,
   title = {Discretization of {{Structured Bosonic Environments}} at {{Finite Temperature}} by {{Interpolative Decomposition}}: {{Theory}} and {{Application}}},
   shorttitle = {Discretization of {{Structured Bosonic Environments}} at {{Finite Temperature}} by {{Interpolative Decomposition}}},
   author = {Takahashi, Hideaki and Borrelli, Raffaele},
   year = {2025},
-  journal = {Journal of Chemical Theory and Computation}
-  doi = {https://doi.org/10.1021/acs.jctc.4c01728},
+  month = feb,
+  journal = {Journal of Chemical Theory and Computation},
+  publisher = {American Chemical Society},
+  issn = {1549-9618},
+  doi = {10.1021/acs.jctc.4c01728}
 }
 ```
 
