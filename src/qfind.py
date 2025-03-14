@@ -62,5 +62,5 @@ with open(filename, 'w') as of:
     of.write("================================================================\n")
     for i in range(Msp):
         of.write('{:25.15e} {:25.15e}\n'.format(
-            wk[i] / icm2ifs, np.sqrt(zk[i]*sbeta(wk[i], icm2ifs)) / icm2ifs**2.0
+            wk[i] / icm2ifs, np.sqrt(zk[i]*sbeta(wk[i], icm2ifs)) / icm2ifs
         ))
