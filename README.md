@@ -61,8 +61,8 @@ See the directory `./examples`.
 
 ## Cite `QFiND`
 If you find the framework useful in your research, we would be grateful if you could cite our publications:
-- H. Takahashi and R. Borrelli, J. Chem. Phys. 161, 151101 (2024). (https://doi.org/10.1063/5.0232232) 
-- H. Takahashi and R. Borrelli, J. Chem. Theory Comput. (2025). (https://doi.org/10.1021/acs.jctc.4c01728)
+- H. Takahashi and R. Borrelli, J. Chem. Phys. 161, 151101 (2024) (https://doi.org/10.1063/5.0232232) 
+- H. Takahashi and R. Borrelli,  J. Chem. Theory Comput. 21, 2206–2218 (2025) (https://doi.org/10.1021/acs.jctc.4c01728)
 
 Here are the bibtex entries:
 ```bib
@@ -84,12 +84,16 @@ Here are the bibtex entries:
   shorttitle = {Discretization of {{Structured Bosonic Environments}} at {{Finite Temperature}} by {{Interpolative Decomposition}}},
   author = {Takahashi, Hideaki and Borrelli, Raffaele},
   year = {2025},
-  month = feb,
+  month = mar,
   journal = {Journal of Chemical Theory and Computation},
+  volume = {21},
+  number = {5},
+  pages = {2206--2218},
   publisher = {American Chemical Society},
   issn = {1549-9618},
-  doi = {10.1021/acs.jctc.4c01728}
+  doi = {10.1021/acs.jctc.4c01728},
 }
+
 ```
 
 
