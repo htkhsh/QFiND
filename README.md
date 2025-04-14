@@ -47,7 +47,7 @@ To customize the simulation, you need to adjust certain parameters in the follow
   - `frank` (integer): Rank for the ID.  When frank is set to a value larger than 0 (`frank`>0), ID is performed based on the rank.
   - `stype`: The type of spectral density $J(\omega)$ (`PWR`, `TM`, `BO`).  The program supports several types of spectral density, such as:
     - Power-law with exponential cutoff (`PWR`) 
-      $$J(\omega)=\pi\alpha\omega_c^{1-s}\omega^s\mathrm{e}^{-\omega/\omega_c}$$
+      $$J(\omega)=\pi\alpha\omega_c^{-s}\omega^s\mathrm{e}^{-\omega/\omega_c}$$
     - Sum of Tannor-Meyer type spectral densities (`TM`)
       $$J(\omega)=\sum_{j=1}^n \frac{4\Gamma_j\lambda_j(\Omega_j^2+\Gamma_j^2)\omega}{\left[(\omega+\Omega_j)^2+\Gamma_j^2\right]\left[(\omega-\Omega_j)^2+\Gamma_j^2\right]}$$
     - Sum of Brownian spectral densities (`BO`)
