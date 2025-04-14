@@ -22,8 +22,8 @@ def bsdo(N_w, Omega_min, Omega_max, Msp):
     - Omega_max (float): The maximum frequency.
         
     Returns:
-    - k (ndarray) : The discretized frequencies.
-    - zk (ndarray) : The squared first components of the eigenvectors (weights).
+    - wk (ndarray) : The discretized frequencies.
+    - zk (ndarray) : The corresponding coefficients.
     """
     w = np.linspace(Omega_min, Omega_max, N_w) 
     j = sbeta(w)
@@ -32,14 +32,14 @@ def bsdo(N_w, Omega_min, Omega_max, Msp):
     wj = np.column_stack((w, j))
 
     # Compute discretized frequencies (wd) and weights (zd)
-    wk, zk = orthpoly_discretization(Msp, wj)
+    wk, gk = orthpoly_discretization(Msp, wj)
     if Omega_min < 0:
         norm = quad(lambda w: sbeta(w), Omega_min, 0)[0] + quad(lambda w: sbeta(w), 0, Omega_max)[0]
     else:
         norm = quad(lambda w: sbeta(w), Omega_min, Omega_max)[0]
-    zk = zk * norm
+    gk = gk * norm * 2.0 / np.pi
 
-    return wk, zk
+    return wk, gk
 
 
 def orthpoly_discretization(N, wj):
@@ -74,7 +74,7 @@ def orthpoly_discretization(N, wj):
     eigenvalues, eigenvectors = np.linalg.eigh(M)
     
     # Compute zd and wd
-    zd = eigenvectors[0, :] ** 2
+    zd = eigenvectors[0, :] ** 2.0
     wd = eigenvalues
 
     return wd, zd

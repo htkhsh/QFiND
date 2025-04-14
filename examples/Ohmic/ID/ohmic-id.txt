@@ -13,5 +13,5 @@ frank = 0
 stype = PWR
 # PWR
 s = 1.0
-gamc = 53.0
-alpha = 5.0
+gamc = 50.0
+alpha = 50.0

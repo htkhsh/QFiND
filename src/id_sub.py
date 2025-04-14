@@ -35,7 +35,7 @@ def id_freq_eps(f, eps, rnd):
     f1 = reconstruct_matrix_from_id(B, idx, proj)
 
     # Compute the maximum absolute error
-    err = np.max(np.abs(f1 - f))
+    err = np.linalg.norm(np.abs(f1 - f))
 
     return frank, idx, B, err
 
@@ -72,6 +72,6 @@ def id_freq_rank(f, frank, rnd):
     f1 = reconstruct_matrix_from_id(B, idx, proj)
 
     # Compute the maximum absolute error
-    err = np.max(np.abs(f1 - f))
+    err = np.linalg.norm(np.abs(f1 - f))
 
     return idx, B, err

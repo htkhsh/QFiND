@@ -47,7 +47,7 @@ def edr_id(N_t, N_w, tc, omega_min, omega_max, eps, frank, rand=False):
 
     ind = np.argsort(wk)
     wk = wk[ind]
-    zk = zk[ind]
+    zk = zk[ind] * 2.0 / np.pi
 
     Nsp = frank
     # Remove zero coefficients if any
@@ -137,12 +137,12 @@ def create_integrand(t, w):
     # Fill the first N_t rows of f with the real part of an integrand
     for i in range(N_t):
         for j in range(N_w):
-            f[i, j] = sbeta(w[j],icm2ifs) * np.cos(w[j] * t[i])
+            f[i, j] = sbeta(w[j], icm2ifs) * np.cos(w[j] * t[i]) / np.pi
     
     # Fill the next N_t rows of f with the imaginary part of an integrand
     for i in range(N_t, 2*N_t):
         for j in range(N_w):
-            f[i, j] = -sbeta(w[j],icm2ifs) * np.sin(w[j] * t[i-N_t])
+            f[i, j] = -sbeta(w[j], icm2ifs) * np.sin(w[j] * t[i-N_t]) / np.pi
     
     return f
 

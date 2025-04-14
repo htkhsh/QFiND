@@ -52,7 +52,7 @@ def setpara(f):
     # Parse spectral density options
     if opt['stype'] == "PWR":
         opt['s'] = float(opt['s'])
-        opt['alpha'] = float(opt['alpha'])/float(opt['gamc'])
+        opt['alpha'] = float(opt['alpha'])
         opt['gamc'] = float(opt['gamc'])
     elif opt['stype'] == "TM" or opt['stype'] == "BO":
         opt['Omg'] = np.array([float(num.strip()) for num in opt['Omg'].split(',')])

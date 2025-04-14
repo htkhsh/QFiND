@@ -60,7 +60,7 @@ def mdm_ohmic(Msp, gamc, omegac):
     # Compute dos array
     wk = np.concatenate((-wj, wj))
     dos = np.exp(-np.abs(wk) / gamc) / omega0
-    zk = 1.0 / dos
+    zk = 1.0 / dos * 2.0 / np.pi
 
     return wk ,zk
 
@@ -91,7 +91,7 @@ def mdm_g(Msp, Omega_max):
     norm = (1.0 / float(Msp)) * int_dens(Omega_max)
     print('norm:', norm)
     wk = np.concatenate((-w, w))
-    zk = 1.0 / dos(np.abs(wk)) * norm 
+    zk = 1.0 / dos(np.abs(wk)) * norm * 2.0 / np.pi
 
     return wk, zk
 

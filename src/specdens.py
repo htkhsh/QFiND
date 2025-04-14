@@ -14,7 +14,7 @@ if Temp > 0.0:
 
 def spectral_density(stype, omega, nrm=1.0):
     if stype == "PWR":
-        res = powerlaw_exp(omega, opt['s'], opt['alpha'], opt['gamc']*nrm)
+        res = powerlaw_exp(omega, opt['s'], opt['alpha']*nrm, opt['gamc']*nrm)
     elif stype == "TM":
         res = tannor_meyer(omega, opt['Omg']*nrm, opt['Gam']*nrm, opt['Lam']*nrm)
     elif stype == "BO":
@@ -29,15 +29,15 @@ def sdens(omega, nrm=1.0):
 
 def sbeta(omega, nrm=1.0):
     if Temp == 0.0:
-        res = np.sign(omega) * spectral_density(stype, np.abs(omega), nrm) / np.pi
+        res = np.sign(omega) * spectral_density(stype, np.abs(omega), nrm) 
     else:
         res = (np.sign(omega) * spectral_density(stype, np.abs(omega), nrm) *
-               (1.0 / np.tanh(0.5 * beta*icm2ifs/nrm * omega) + 1.0) / (2.0 * np.pi))
+               (1.0 / np.tanh(0.5 * beta*icm2ifs/nrm * omega) + 1.0) / 2.0)
     return res
 
 
 def powerlaw_exp(omega, s, alpha, gamc):
-    res = np.pi * alpha * gamc**(1.0 - s) * omega**s * np.exp(-omega / gamc)
+    res = np.pi * alpha * gamc**(-s) * omega**s * np.exp(-omega / gamc)
     return res
 
 

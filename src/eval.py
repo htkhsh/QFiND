@@ -60,5 +60,5 @@ def C_t(t, zk, wk):
     N = len(wk)
     res = 0.0 + 0.0j
     for m in range(N): 
-        res += zk[m] * sbeta(wk[m], icm2ifs) * np.exp(-1j * wk[m] * t)
+        res += 0.5 * zk[m] * sbeta(wk[m], icm2ifs) * np.exp(-1j * wk[m] * t)
     return res

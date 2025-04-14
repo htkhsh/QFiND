@@ -65,4 +65,6 @@ def log_disc(Msp, Omegac, lamb=1.1):
         g_val = g[idx]
         w[idx] = res / g_val if g_val != 0 else 0  # Avoid division by zero
 
-    return w, g
+    g = g * 2.0 / np.pi  
+    
+    return w, g 
