@@ -1,4 +1,10 @@
+| 🍙 Notice         |
+|:---------------------------|
+| Please check out the [QFiND.jl](https://github.com/DOC-Package/QFiND.jl) Julia package.  We will be updating only the Julia version. |
+
 # QFiND
+
+Look at the Julia version.
 
 This repository contains Python codes for constructing an effective discrete representation of a system-bath model. In other words, this codes provides an approximation of the bath correlation function $C(t)$ for a given spectral density $J(\omega)$
 
